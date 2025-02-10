@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonDates.Client", "DungeonDates.Client\DungeonDates.Client.csproj", "{5C2FBF2C-2582-4FF0-A86D-9B0882CA8322}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonDates.Function", "DungeonDates.Function\DungeonDates.Function.csproj", "{2DC75F6D-81C2-49B2-A238-E9E9148951B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C2FBF2C-2582-4FF0-A86D-9B0882CA8322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2FBF2C-2582-4FF0-A86D-9B0882CA8322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2FBF2C-2582-4FF0-A86D-9B0882CA8322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2FBF2C-2582-4FF0-A86D-9B0882CA8322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC75F6D-81C2-49B2-A238-E9E9148951B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC75F6D-81C2-49B2-A238-E9E9148951B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC75F6D-81C2-49B2-A238-E9E9148951B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC75F6D-81C2-49B2-A238-E9E9148951B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
