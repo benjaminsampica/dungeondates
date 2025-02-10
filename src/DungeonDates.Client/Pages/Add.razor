@@ -1,15 +1,16 @@
 @page "/Add"
 
-<h3>Add</h3>
+<h3>Schedule A Dungeon Date!</h3>
 
-<RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
+<RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter" AllowClose="false">
     Use the calendar below to select days. You can add or remove days simply by touching the day.
 </RadzenAlert>
 
-<RadzenScheduler @ref="@_scheduler" SlotRender="@OnSlotRender" style="height: 768px;" 
-                 Data="@_calendarDates" StartProperty="@nameof(AddCalendarDate.Start)" EndProperty="@nameof(AddCalendarDate.End)" 
-                 TItem="AddCalendarDate" SelectedIndex="1"
-                 SlotSelect="@OnSlotSelectAsync" AppointmentSelect="OnAppointmentSelectAsync">
+<RadzenScheduler @ref=@_scheduler style="height: 768px;" TItem="AddCalendarDate" Data=@_calendarDates StartProperty="Start" EndProperty="End"
+                 TextProperty="Text" SelectedIndex="1"
+                 SlotRender="OnSlotRender"
+                 SlotSelect="OnSlotSelectAsync"
+                 AppointmentSelect="OnAppointmentSelectAsync">
     <RadzenWeekView />
     <RadzenMonthView />
 </RadzenScheduler>
