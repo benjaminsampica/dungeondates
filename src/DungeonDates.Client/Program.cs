@@ -6,6 +6,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new (builder.HostEnvironment.BaseAddress + "/api/") });
+var backendBaseAddress = builder.HostEnvironment.BaseAddress + "api/";
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new (backendBaseAddress) });
 
 await builder.Build().RunAsync();

@@ -9,7 +9,7 @@ public partial class Add(HttpClient httpClient)
     
     public async Task CallApiAsync()
     {
-        var response = await httpClient.GetAsync("/add");
+        var response = await httpClient.GetAsync("add");
 
         _uri = response.RequestMessage?.RequestUri?.AbsoluteUri;
         _content = await response.Content.ReadAsStringAsync();
