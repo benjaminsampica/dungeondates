@@ -1,3 +1,25 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<HeadContent>
+    <RadzenTheme Theme="material-dark" />
+</HeadContent>
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenLabel Text="Dungeon Dates"  />
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenBody>
+        <div class="rz-p-4">
+            @Body
+        </div>
+    </RadzenBody>
+    <RadzenFooter>
+        <div style="text-align: center">
+            Created By Ben Sampica and open source on <RadzenLink Path="https://github.com/benjaminsampica/dungeondates" Text="GitHub" Target="_blank"/>.
+        </div>
+    </RadzenFooter>
+</RadzenLayout>
+
+<RadzenComponents />

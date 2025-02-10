@@ -1,7 +1,15 @@
 @page "/Add"
+
 <h3>Add</h3>
 
-Uri: @_uri
-Content: @_content
+<RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
+    Use the calendar below to select days. You can add or remove days simply by touching the day.
+</RadzenAlert>
 
-<button @onclick="CallApiAsync"></button>
+<RadzenScheduler @ref="@_scheduler" SlotRender="@OnSlotRender" style="height: 768px;" 
+                 Data="@_calendarDates" StartProperty="@nameof(AddCalendarDate.Start)" EndProperty="@nameof(AddCalendarDate.End)" 
+                 TItem="AddCalendarDate" SelectedIndex="1"
+                 SlotSelect="@OnSlotSelectAsync" AppointmentSelect="OnAppointmentSelectAsync">
+    <RadzenWeekView />
+    <RadzenMonthView />
+</RadzenScheduler>

@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonDates.Client", "Dung
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonDates.Function", "DungeonDates.Function\DungeonDates.Function.csproj", "{2DC75F6D-81C2-49B2-A238-E9E9148951B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonDates.Shared", "DungeonDates.Shared\DungeonDates.Shared.csproj", "{D73D14C8-A458-4FF6-B630-6BCE4F36FABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{2DC75F6D-81C2-49B2-A238-E9E9148951B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DC75F6D-81C2-49B2-A238-E9E9148951B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DC75F6D-81C2-49B2-A238-E9E9148951B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73D14C8-A458-4FF6-B630-6BCE4F36FABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73D14C8-A458-4FF6-B630-6BCE4F36FABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73D14C8-A458-4FF6-B630-6BCE4F36FABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73D14C8-A458-4FF6-B630-6BCE4F36FABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
