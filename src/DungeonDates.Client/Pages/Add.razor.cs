@@ -52,6 +52,7 @@ public partial class Add(HttpClient httpClient)
             return;
         }
 
+        _invalidForm = false;
         // TODO: Snackbar + show link to copy.
         await httpClient.PostAsJsonAsync("add", _calendarDates);
     }

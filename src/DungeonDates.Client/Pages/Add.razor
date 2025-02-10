@@ -6,7 +6,8 @@
     Use the calendar below to select days. You can add or remove days simply by touching the day.
 </RadzenAlert>
 
-<RadzenScheduler @ref=@_scheduler style="height: 768px;" TItem="AddCalendarDate" Data=@_calendarDates StartProperty="Start" EndProperty="End"
+<RadzenScheduler @ref=@_scheduler style="height: 768px;" TItem="AddCalendarDate" Data="@_calendarDates" 
+                 StartProperty="@nameof(AddCalendarDate.Start)" EndProperty="@nameof(AddCalendarDate.End)"
                  TextProperty="Text" SelectedIndex="1"
                  SlotRender="OnSlotRender"
                  SlotSelect="OnSlotSelectAsync"
@@ -14,5 +15,12 @@
     <RadzenWeekView />
     <RadzenMonthView />
 </RadzenScheduler>
+
+@if (_invalidForm)
+{
+    <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter" AllowClose="false">
+        Please select one or more days.
+    </RadzenAlert>
+}
 
 <RadzenButton Click="OnSaveAsync" Text="Save" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large"/>
