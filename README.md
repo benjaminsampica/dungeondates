@@ -6,7 +6,7 @@ Uses
 
 # Getting Started
 
-In order to run the web app you must have:
+In order to run any projects you must have:
 
 - Latest .NET SDK
 
