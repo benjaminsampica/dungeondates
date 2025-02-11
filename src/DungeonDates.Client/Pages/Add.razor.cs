@@ -1,12 +1,14 @@
 using DungeonDates.Shared;
+using DungeonDates.Shared.Features;
 using System.Net.Http.Json;
 
 namespace DungeonDates.Client.Pages;
 
-public partial class Add(HttpClient httpClient)
+public partial class Add(HttpClient httpClient, NotificationService notificationService, DialogService dialogService)
 {
     private readonly IList<AddCalendarDate> _calendarDates = [];
     private RadzenScheduler<AddCalendarDate> _scheduler = null!;
+    private bool _isLoading;
 
     private bool _invalidForm;
     
@@ -46,14 +48,46 @@ public partial class Add(HttpClient httpClient)
 
     private async Task OnSaveAsync()
     {
+        _isLoading = true;
+        
         if (_calendarDates.Count == 0)
         {
             _invalidForm = true;
+            _isLoading = false;
             return;
         }
 
         _invalidForm = false;
-        // TODO: Snackbar + show link to copy.
-        await httpClient.PostAsJsonAsync("add", _calendarDates);
+
+        try
+        {
+            var response = await httpClient.PostAsJsonAsync("add", _calendarDates);
+
+            response.EnsureSuccessStatusCode();
+
+            var successfulAddResponse = await response.Content.ReadFromJsonAsync<SuccessfulAddResponse>();
+            
+            await dialogService.OpenAsync<AddSuccess>("Successfully Created Dungeon Date",
+                new() { { nameof(SuccessfulAddResponse.Id), successfulAddResponse!.Id } },
+                new()
+                {
+                    Style = "border: 1px solid var(--rz-success);"
+                });
+        }
+        catch
+        {
+            notificationService.Notify(new() { Summary = "Error", Detail = "Something went wrong. Please try again later.", Severity = NotificationSeverity.Error });
+        }
+        finally
+        {
+            _isLoading = false;
+            _calendarDates.Clear();
+            await _scheduler.Reload();
+        }
     }
+}
+
+public record SuccessfulAddResponse
+{
+    public Guid Id { get; set; }
 }

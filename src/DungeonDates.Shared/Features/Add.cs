@@ -1,4 +1,4 @@
-﻿namespace DungeonDates.Shared;
+﻿namespace DungeonDates.Shared.Features;
 
 public class AddCalendarDate
 {

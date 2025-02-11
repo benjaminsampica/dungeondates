@@ -1,11 +1,10 @@
-using Azure.Data.Tables;
-using DungeonDates.Function;
+using DungeonDates.Function.Infrastructure.Databases;
 using Microsoft.Azure.Functions.Worker.Builder;
-using Microsoft.Extensions.Azure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Testcontainers.Azurite;
+using Testcontainers.MsSql;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
@@ -13,29 +12,30 @@ builder.ConfigureFunctionsWebApplication();
 
 if (builder.Environment.IsDevelopment())
 {
-    var databaseContainer = new AzuriteBuilder()
+    var databaseContainer = new MsSqlBuilder()
         .Build();
+
+    await databaseContainer.StartAsync();
 
     builder.Configuration.AddInMemoryCollection(
     [
-        new("ConnectionStrings:StorageAccount", databaseContainer.GetConnectionString())
+        new("ConnectionStrings:DungeonDatesDatabase", databaseContainer.GetConnectionString())
     ]);
 }
 
-builder.Services.AddAzureClients(clientBuilder =>
+builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
 {
-    clientBuilder.AddTableServiceClient(builder.Configuration.GetConnectionString("StorageAccount")).WithName("table");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DungeonDatesDatabase"), options => options.EnableRetryOnFailure());
 });
+
 
 var app = builder.Build();
 
-if (builder.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    using var scope = app.Services.CreateScope();
-
-    var tableServiceClient = scope.ServiceProvider.GetRequiredService<IAzureClientFactory<TableServiceClient>>();
-
-    await tableServiceClient.CreateClient("table").CreateTableIfNotExistsAsync(nameof(DungeonDate));
+    var dbContext = scope.ServiceProvider.GetRequiredService<DungeonDatesDbContext>();
+    
+    await dbContext.Database.MigrateAsync();
 }
 
 await app.RunAsync();

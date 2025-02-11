@@ -1,4 +1,4 @@
-@page "/Add"
+@page "/add"
 
 <h3>Schedule A Dungeon Date!</h3>
 
@@ -23,4 +23,8 @@
     </RadzenAlert>
 }
 
-<RadzenButton Click="OnSaveAsync" Text="Save" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large"/>
+<RadzenRow>
+    <RadzenColumn Size="12" class="rz-shadow-4 rz-py-3">
+        <RadzenButton Click="OnSaveAsync" Text="Save" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large" class="rz-w-100" Disabled="_isLoading"/>
+    </RadzenColumn>
+</RadzenRow>

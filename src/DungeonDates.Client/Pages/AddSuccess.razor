@@ -1,0 +1,36 @@
+@inject DialogService DialogService
+@inject NavigationManager NavigationManager
+
+<RadzenStack Gap="1rem" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.SpaceBetween" Style="height: 100%;">
+    <RadzenStack>
+        <RadzenRow>
+            <RadzenAlert AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Shade="Shade.Lighter" AllowClose="false" ShowIcon="false">
+                Copy the below url to share the link to your friends to fill out. <b>This link is not retrievable again so do not lose it!</b>
+
+                @{
+                    var url = $"{NavigationManager.BaseUri}respond/{Id}";
+                }
+
+                <RadzenRow>
+                    <RadzenColumn Size="12">
+                        <RadzenFormField Variant="@Variant.Text" class="rz-w-100" >
+                            <ChildContent>
+                                <RadzenTextBox Value="@url" />
+                            </ChildContent>
+                            <End>
+                                <CopyToClipboard Text="@url"/>
+                            </End>
+                        </RadzenFormField>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenAlert>
+        </RadzenRow>
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+        <RadzenButton Click="@(() => DialogService.Close(true))" Variant="Variant.Flat" Text="Close" Style="width: 120px" />
+    </RadzenStack>
+</RadzenStack>
+
+@code {
+    [Parameter, EditorRequired] public Guid Id { get; set; }
+}

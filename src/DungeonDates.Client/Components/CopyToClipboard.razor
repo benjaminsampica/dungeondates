@@ -1,0 +1,14 @@
+@inject IJSRuntime JsRuntime
+@inject NotificationService NotificationService
+
+<RadzenButton Icon="content_copy" Click="CopyTextToClipboard" Variant="Variant.Text" Size="ButtonSize.Small" />
+
+@code {
+    [Parameter, EditorRequired] public required string Text { get; set; }
+
+    private async Task CopyTextToClipboard()
+    {
+        NotificationService.Notify(new() { Summary = "Copied", Detail = "Copied url to clipboard.", Severity = NotificationSeverity.Info });
+        await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", Text);
+    }
+}

@@ -41,6 +41,13 @@
     <script src="/_content/Radzen.Blazor/Radzen.Blazor.js"></script>
     
     <script type="text/javascript">
+        window.clipboardCopy = {
+            copyText: function(text) {
+                navigator.clipboard.writeText(text);
+            }
+        };
+    </script>
+    <script type="text/javascript">
         // Single Page Apps for GitHub Pages / Azure Static Web Apps
         // MIT License
         // https://github.com/rafgraph/spa-github-pages

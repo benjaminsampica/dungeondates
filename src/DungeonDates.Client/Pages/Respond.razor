@@ -1,1 +1,26 @@
-Code to Respond
+@page "/respond/{id:guid}"
+
+@if (_response is null)
+{
+    <text>TODO show loading...</text>
+}
+else
+{
+    <RadzenStack class="rz-p-0 rz-p-md-12">
+        <RadzenCardGroup>
+            @foreach (var item in _response.ProposedDates)
+            {
+                <RadzenCard Variant="@Variant.Filled">
+                    <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                            <RadzenText TextStyle="TextStyle.H6">@item.StartDate.ToString("d")</RadzenText>
+                            <RadzenText TextStyle="TextStyle.H2" class="rz-m-0">@($"{item.AcceptedResponseCount} / {item.TotalResponseCount}")</RadzenText>
+                        </RadzenStack>
+                    </RadzenStack>
+                </RadzenCard>
+            }
+            
+        </RadzenCardGroup>
+    </RadzenStack>
+}
+
