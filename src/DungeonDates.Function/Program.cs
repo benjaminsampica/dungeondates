@@ -10,18 +10,18 @@ var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
 
-if (builder.Environment.IsDevelopment())
-{
-    var databaseContainer = new MsSqlBuilder()
-        .Build();
-
-    await databaseContainer.StartAsync();
-
-    builder.Configuration.AddInMemoryCollection(
-    [
-        new("ConnectionStrings:DungeonDatesDatabase", databaseContainer.GetConnectionString())
-    ]);
-}
+// if (builder.Environment.IsDevelopment())
+// {
+//     var databaseContainer = new MsSqlBuilder()
+//         .Build();
+//
+//     await databaseContainer.StartAsync();
+//
+//     builder.Configuration.AddInMemoryCollection(
+//     [
+//         new("ConnectionStrings:DungeonDatesDatabase", databaseContainer.GetConnectionString())
+//     ]);
+// }
 
 builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
 {
