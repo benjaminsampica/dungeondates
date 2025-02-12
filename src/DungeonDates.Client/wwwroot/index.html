@@ -21,15 +21,16 @@
     <meta property="twitter:description" content="Pick dates and send the proposed days to your friends. Send them the link to fill out and find a day that works for you all. Then, roll for initiative!"/>
     <meta property="twitter:image" content="/icon.png"/>
     <meta property="twitter:card" content="summary_large_image"/>
+    
+    <link rel="stylesheet" href="/css/app.css" />
 </head>
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div id="loading">
+            <img src="/icon.png" alt="Dungeon Dates logo."/>
+            <h1 class="loading-progress-text"></h1>
+        </div>
     </div>
 
     <div id="blazor-error-ui">
