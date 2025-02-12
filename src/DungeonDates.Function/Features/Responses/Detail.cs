@@ -10,7 +10,7 @@ namespace DungeonDates.Function.Features.Responses;
 public class Detail(DungeonDatesDbContext dbContext)
 {
     [Function("detail")]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, Route = "detail/{id}")] HttpRequest req)
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "detail/{id}")] HttpRequest req)
     {
         var succeeded = Guid.TryParse(req.RouteValues[nameof(GetDetailRequest.Id)]?.ToString(), out var id);
         
