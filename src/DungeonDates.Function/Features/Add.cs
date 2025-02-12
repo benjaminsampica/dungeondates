@@ -1,5 +1,4 @@
 using DungeonDates.Function.Infrastructure.Databases;
-using DungeonDates.Shared;
 using DungeonDates.Shared.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

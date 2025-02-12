@@ -17,6 +17,7 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
         if (!response.IsSuccessStatusCode)
         {
             navigationManager.NavigateTo("/StatusCode/404");
+            return;
         }
 
         _response = await response.Content.ReadFromJsonAsync<GetDetailResponse>();
