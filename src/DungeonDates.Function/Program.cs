@@ -4,24 +4,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Testcontainers.MsSql;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
 
-if (builder.Environment.IsDevelopment())
-{
-    var databaseContainer = new MsSqlBuilder()
-        .Build();
-
-    await databaseContainer.StartAsync();
-
-    builder.Configuration.AddInMemoryCollection(
-    [
-        new("ConnectionStrings:DungeonDatesDatabase", databaseContainer.GetConnectionString())
-    ]);
-}
+// if (builder.Environment.IsDevelopment())
+// {
+//     var databaseContainer = new MsSqlBuilder()
+//         .Build();
+//
+//     await databaseContainer.StartAsync();
+//
+//     builder.Configuration.AddInMemoryCollection(
+//     [
+//         new("ConnectionStrings:DungeonDatesDatabase", databaseContainer.GetConnectionString())
+//     ]);
+// }
 
 builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
 {
