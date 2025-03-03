@@ -1,5 +1,6 @@
 using DungeonDates.Function.Infrastructure.Databases;
 using Microsoft.Azure.Functions.Worker.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,10 +22,10 @@ builder.ConfigureFunctionsWebApplication();
 //     ]);
 // }
 
-// builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
-// {
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DungeonDatesDatabase"), options => options.EnableRetryOnFailure());
-// });
+builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DungeonDatesDatabase"), options => options.EnableRetryOnFailure());
+});
 
 
 var app = builder.Build();
