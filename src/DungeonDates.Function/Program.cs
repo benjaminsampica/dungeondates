@@ -30,11 +30,11 @@ builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<DungeonDatesDbContext>();
-    
-    await dbContext.Database.MigrateAsync();
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var dbContext = scope.ServiceProvider.GetRequiredService<DungeonDatesDbContext>();
+//     
+//     await dbContext.Database.MigrateAsync();
+// }
 
 await app.RunAsync();
