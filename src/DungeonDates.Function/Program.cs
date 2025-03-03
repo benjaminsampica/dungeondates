@@ -4,23 +4,24 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Testcontainers.MsSql;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
 
-// if (builder.Environment.IsDevelopment())
-// {
-//     var databaseContainer = new MsSqlBuilder()
-//         .Build();
-//
-//     await databaseContainer.StartAsync();
-//
-//     builder.Configuration.AddInMemoryCollection(
-//     [
-//         new("ConnectionStrings:DungeonDatesDatabase", databaseContainer.GetConnectionString())
-//     ]);
-// }
+if (builder.Environment.IsDevelopment())
+{
+    var databaseContainer = new MsSqlBuilder()
+        .Build();
+
+    await databaseContainer.StartAsync();
+
+    builder.Configuration.AddInMemoryCollection(
+    [
+        new("ConnectionStrings:DungeonDatesDatabase", databaseContainer.GetConnectionString())
+    ]);
+}
 
 builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
 {
@@ -30,11 +31,14 @@ builder.Services.AddDbContext<DungeonDatesDbContext>(options =>
 
 var app = builder.Build();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var dbContext = scope.ServiceProvider.GetRequiredService<DungeonDatesDbContext>();
-//     
-//     await dbContext.Database.MigrateAsync();
-// }
+if (builder.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    
+    var dbContext = scope.ServiceProvider.GetRequiredService<DungeonDatesDbContext>();
+        
+    await dbContext.Database.MigrateAsync();
+}
+
 
 await app.RunAsync();
