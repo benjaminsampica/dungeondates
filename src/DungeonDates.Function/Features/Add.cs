@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace DungeonDates.Function.Features;
 
-public class Add(DungeonDatesDbContext dbContext)
+public class Add()
 {
     [Function("add")]
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous,  "post")] HttpRequest req)
@@ -27,9 +27,6 @@ public class Add(DungeonDatesDbContext dbContext)
         {
             Dates = proposedDates
         };
-
-        dbContext.DungeonDates.Add(dungeonDate);
-        await dbContext.SaveChangesAsync();
         
         return new OkObjectResult(new
         {
