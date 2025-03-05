@@ -1,0 +1,30 @@
+@page "/debug"
+
+@foreach (var item in _data)
+{
+    <span>
+        Key
+    </span>
+    <span>
+        @item.Key
+    </span>
+    <br/>
+    <span>
+        Value
+    </span>
+    <span>
+        @item.Value
+    </span>
+    <br/>
+}
+
+@code {
+    [Inject] public HttpClient HttpClient { get; set; } = null!;
+
+    private List<KeyValuePair<string?, string>> _data = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data = await HttpClient.GetFromJsonAsync<List<KeyValuePair<string?, string>>>("debug");
+    }
+}
