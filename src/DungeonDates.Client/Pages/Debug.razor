@@ -1,6 +1,6 @@
 @page "/debug"
 
-@foreach (var item in _data)
+@foreach (var item in _response.Data)
 {
     <span>
         Key
@@ -21,10 +21,10 @@
 @code {
     [Inject] public HttpClient HttpClient { get; set; } = null!;
 
-    private List<KeyValuePair<string?, string>> _data = [];
+    private DebugResponse _response = new();
 
     protected override async Task OnInitializedAsync()
     {
-        _data = await HttpClient.GetFromJsonAsync<List<KeyValuePair<string?, string>>>("debug");
+        _response = await HttpClient.GetFromJsonAsync<DebugResponse>("debug");
     }
 }
