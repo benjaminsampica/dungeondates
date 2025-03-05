@@ -6,28 +6,36 @@
 }
 else
 {
+    <RadzenRow Gap="2rem" RowGap="2rem" class="rz-m-0 rz-m-md-12">
+        <RadzenColumn Size="12" SizeMD="4">
+            <RadzenCard>
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Placeholder</RadzenText>
+                <RadzenTextBox Placeholder="Enter your name..." @bind-Value=@Name Style="width: 100%" />
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
     <RadzenStack class="rz-p-0 rz-p-md-12">
         <RadzenCardGroup>
             @foreach (var proposedDate in _response.ProposedDates)
             {
                 <RadzenCard Variant="@Variant.Filled">
                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
-                        <RadzenIcon  Icon="check" IconColor="@Colors.Success"/>
                         <RadzenText TextStyle="TextStyle.H2">@proposedDate.StartDate.ToString("d")</RadzenText>
-                        <RadzenText TextStyle="TextStyle.H2" class="rz-m-0">@($"{proposedDate.AcceptedResponseCount} / {proposedDate.TotalResponseCount}")</RadzenText>
+                        <RadzenText TextStyle="TextStyle.H2" class="rz-m-0">
+                            @($"{proposedDate.AcceptedResponseCount} / {proposedDate.TotalResponseCount}")
+                        </RadzenText>
                     </RadzenStack>
                     @foreach (var response in proposedDate.Responses)
                     {
                         <RadzenCard Variant="Variant.Outlined" class="rz-my-12 rz-mx-auto" Style="max-width: 420px">
                             <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" class="rz-p-4">
                                 <RadzenText Text="@response.Name" TextStyle="TextStyle.H6" />
-                                <RadzenIcon  Icon="check" IconColor="@Colors.Success"/>
+                                <RadzenIcon Icon="check" IconColor="@Colors.Success"/>
                             </RadzenStack>
                         </RadzenCard>
                     }
                 </RadzenCard>
             }
-            
         </RadzenCardGroup>
     </RadzenStack>
 }

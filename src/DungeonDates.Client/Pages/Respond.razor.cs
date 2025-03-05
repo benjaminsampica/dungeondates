@@ -10,6 +10,8 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
     
     private GetDetailResponse? _response;
     
+    private string? Name { get; set; }
+    
     protected override async Task OnInitializedAsync()
     {
         var response = await httpClient.GetAsync($"detail/{Id}");
@@ -21,5 +23,10 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
         }
 
         _response = await response.Content.ReadFromJsonAsync<GetDetailResponse>();
+    }
+
+    private async Task PostProposedDateResponse()
+    {
+        // need to think about how i want this to work.
     }
 }
