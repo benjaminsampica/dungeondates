@@ -3,12 +3,12 @@ using System.Net.Http.Json;
 
 namespace DungeonDates.Client.Pages;
 
-public partial class Add(HttpClient httpClient, NotificationService notificationService, DialogService dialogService)
+public partial class Add(HttpClient httpClient, NotificationService notificationService, DialogService dialogService) : IDisposable
 {
     private readonly IList<AddCalendarDate> _calendarDates = [];
     private RadzenScheduler<AddCalendarDate> _scheduler = null!;
+    private readonly CancellationTokenSource _cts = new();
     private bool _isLoading;
-
     private bool _invalidForm;
     
     private void OnSlotRender(SchedulerSlotRenderEventArgs args)
@@ -45,7 +45,7 @@ public partial class Add(HttpClient httpClient, NotificationService notification
         await _scheduler.Reload();
     }
 
-    private async Task OnSaveAsync()
+    private async Task OnSaveClickedAsync()
     {
         _isLoading = true;
         
@@ -83,6 +83,12 @@ public partial class Add(HttpClient httpClient, NotificationService notification
             _calendarDates.Clear();
             await _scheduler.Reload();
         }
+    }
+    
+    public void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
     }
 }
 

@@ -14,6 +14,9 @@ if (builder.HostEnvironment.IsDevelopment())
     backendBaseAddress = "http://localhost:7057/api/";
 }
 
-builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new (backendBaseAddress) });
+builder.Services.AddHttpClient(nameof(DungeonDates), client => client.BaseAddress = new(backendBaseAddress))
+    .AddStandardResilienceHandler();
+
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(nameof(DungeonDates)));
 
 await builder.Build().RunAsync();

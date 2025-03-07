@@ -11,28 +11,33 @@ namespace DungeonDates.Function.Features.Responses;
 public class Add(DungeonDatesDbContext dbContext)
 {
     [Function("add-detail")]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "detail/{proposedDateId}")] HttpRequest req)
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "detail/{id}")] HttpRequest req)
     {
-        var succeeded = Guid.TryParse(req.RouteValues[nameof(PostDetailRequest.ProposedDateId)]?.ToString(), out var id);
+        var succeeded = Guid.TryParse(req.RouteValues[nameof(PostDetailRequest.Id)]?.ToString(), out var id);
         
         if(!succeeded) return new NotFoundResult();
         
-        var proposedDate = await dbContext.ProposedDates
+        var dungeonDate = await dbContext.DungeonDates
             .FirstOrDefaultAsync(d => d.Id == id, req.HttpContext.RequestAborted);
         
-        if (proposedDate == null) return new NotFoundResult();
+        if (dungeonDate == null) return new NotFoundResult();
         
-        var request = await JsonSerializer.DeserializeAsync<PostDetailRequest>(req.Body);
-        
-        var proposedDateResponse = new ProposedDateResponse
+        var request = await JsonSerializer.DeserializeAsync<PostDetailRequest>(req.Body, JsonSerializerOptions.Web, req.HttpContext.RequestAborted);
+
+        foreach (var proposedDate in request!.ProposedDateResponses)
         {
-            Name = request!.Name,
-            Accepted = request.Accepted
-        };
+            var proposedDateResponse = new ProposedDateResponse
+            {
+                ProposedDateId = proposedDate.ProposedDateId,
+                Accepted = proposedDate.Accepted,
+                Name = request.Name
+            };
+            
+            dbContext.ProposedDateResponses.Add(proposedDateResponse);
+        }
         
-        proposedDate.Responses.Add(proposedDateResponse);
         await dbContext.SaveChangesAsync(req.HttpContext.RequestAborted);
         
-        return new OkObjectResult(null);
+        return new OkResult();
     }
 }

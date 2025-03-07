@@ -2,8 +2,14 @@ namespace DungeonDates.Shared.Features.Responses;
 
 public class PostDetailRequest
 {
-    public required Guid ProposedDateId { get; set; }
+    public Guid Id { get; set; }
     
-    public required string Name { get; init; }
-    public required bool Accepted { get; init; }
+    public string? Name { get; init; }
+    public List<ProposedDate> ProposedDateResponses { get; set; } = [];
+
+    public class ProposedDate
+    {
+        public Guid ProposedDateId { get; set; }
+        public bool Accepted { get; set; }
+    }
 }

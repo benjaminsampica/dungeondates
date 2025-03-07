@@ -25,6 +25,15 @@
 
 <RadzenRow>
     <RadzenColumn Size="12" class="rz-shadow-4 rz-py-3">
-        <RadzenButton Click="OnSaveAsync" Text="Save" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large" class="rz-w-100" Disabled="_isLoading"/>
+        <RadzenButton Click="OnSaveClickedAsync" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large" class="rz-w-100" Disabled="_isLoading">
+            @if (_isLoading)
+            {
+                <span>Saving...</span>
+            }
+            else
+            {
+                <span>Save</span>
+            }
+        </RadzenButton>
     </RadzenColumn>
 </RadzenRow>

@@ -6,37 +6,58 @@
 }
 else
 {
-    <RadzenRow Gap="2rem" RowGap="2rem" class="rz-m-0 rz-m-md-12">
-        <RadzenColumn Size="12" SizeMD="4">
+    <RadzenRow>
+        <RadzenColumn Size="12">
             <RadzenCard>
-                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Placeholder</RadzenText>
-                <RadzenTextBox Placeholder="Enter your name..." @bind-Value=@Name Style="width: 100%" />
+                <RadzenText TextStyle="TextStyle.H1">Respond To Request</RadzenText>
             </RadzenCard>
         </RadzenColumn>
-    </RadzenRow>
-    <RadzenStack class="rz-p-0 rz-p-md-12">
-        <RadzenCardGroup>
-            @foreach (var proposedDate in _response.ProposedDates)
-            {
-                <RadzenCard Variant="@Variant.Filled">
-                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
-                        <RadzenText TextStyle="TextStyle.H2">@proposedDate.StartDate.ToString("d")</RadzenText>
-                        <RadzenText TextStyle="TextStyle.H2" class="rz-m-0">
-                            @($"{proposedDate.AcceptedResponseCount} / {proposedDate.TotalResponseCount}")
-                        </RadzenText>
-                    </RadzenStack>
-                    @foreach (var response in proposedDate.Responses)
+        <RadzenColumn Size="12">
+            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Name</RadzenText>
+            <RadzenTextBox Placeholder="Enter your name..." @bind-Value=@_name Style="width: 100%" />
+        </RadzenColumn>
+        @if (!string.IsNullOrWhiteSpace(_name))
+        {
+            <RadzenColumn Size="12">
+                <RadzenStack>
+                    <RadzenCardGroup>
+                        @foreach (var proposedDate in _response.ProposedDates)
+                        {
+                            <RadzenCard Variant="@Variant.Filled">
+                                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                    <RadzenToggleButton ButtonStyle="ButtonStyle.Danger" Icon="close"
+                                                        ToggleButtonStyle="ButtonStyle.Success" ToggleShade="Shade.Default" ToggleIcon="check_circle" Click=@(_ => OnProposedDateClick(proposedDate))
+                                                        InputAttributes="@(new Dictionary<string,object> { { "aria-label", "Large" }})"/>
+                                    <RadzenText TextStyle="TextStyle.H3">@proposedDate.StartDate.ToString("d")</RadzenText>
+                                    <RadzenText TextStyle="TextStyle.H3" class="rz-m-0">
+                                        @($"{proposedDate.AcceptedResponseCount} / {proposedDate.TotalResponseCount}")
+                                    </RadzenText>
+                                </RadzenStack>
+                                @foreach (var response in proposedDate.Responses)
+                                {
+                                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" class="rz-p-4">
+                                        <RadzenText Text="@response.Name" TextStyle="TextStyle.H6" />
+                                        <RadzenIcon Icon="check" IconColor="@Colors.Success"/>
+                                    </RadzenStack>
+                                }
+                            </RadzenCard>
+                        }
+                    </RadzenCardGroup>
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn Size="12">
+                <RadzenButton Click="OnSaveClickedAsync" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large" class="rz-w-100" Disabled="_isLoading">
+                    @if (_isLoading)
                     {
-                        <RadzenCard Variant="Variant.Outlined" class="rz-my-12 rz-mx-auto" Style="max-width: 420px">
-                            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" class="rz-p-4">
-                                <RadzenText Text="@response.Name" TextStyle="TextStyle.H6" />
-                                <RadzenIcon Icon="check" IconColor="@Colors.Success"/>
-                            </RadzenStack>
-                        </RadzenCard>
+                        <span>Saving...</span>
                     }
-                </RadzenCard>
-            }
-        </RadzenCardGroup>
-    </RadzenStack>
+                    else
+                    {
+                        <span>Save</span>
+                    }
+                </RadzenButton>
+            </RadzenColumn>
+        }
+    </RadzenRow>
 }
 
