@@ -1,7 +1,19 @@
-﻿@page "/"
+﻿@layout HomeLayout
+
+@page "/"
 
 <PageTitle>Home</PageTitle>
 
-Build a page that says things with a giant CTA in a hero with the below button
-
-<a class="btn btn-primary" href="/add">Add</a>
+<MudGrid>
+    <MudItem xs="3"></MudItem>
+    <MudItem xs="6" Class="mx-auto">
+        <MudImage Src="/icon.png" Height="300"/>
+        <MudText Typo="Typo.h1" Align="Align.Center" GutterBottom="true">Dungeon Dates</MudText>
+    </MudItem>
+    <MudItem xs="3"></MudItem>
+    <MudItem xs="3"></MudItem>
+    <MudItem xs="6">
+        <MudText Typo="Typo.h4" Align="Align.Center">Easily and quickly schedule your next session</MudText>
+        <MudButton Href="/add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">Schedule Now</MudButton>
+    </MudItem>
+</MudGrid>

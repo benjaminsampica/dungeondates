@@ -14,11 +14,9 @@ In order to run the function app you must have:
 
 - Docker
 
-## Adding A Migration
+## Cosmos DB
 
-```bash
-dotnet ef migrations add {MigrationName} -o Infrastructure/Databases/Migrations
-```
+There is some jank with the Cosmos DB emulator and the partition key settings. You must create the container (`DungeonDates`) manually after starting the application with a partition key of `/id`.
 
 # Hosting
 Domain has been setup on Porkbun and is hosted in Azure via a static web app with a managed Azure Function. Some of the configuration has been done manually in the portal itself.

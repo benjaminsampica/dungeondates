@@ -18,7 +18,7 @@ public class Add(DungeonDatesDbContext dbContext)
         if(!succeeded) return new NotFoundResult();
         
         var dungeonDate = await dbContext.DungeonDates
-            .FirstOrDefaultAsync(d => d.Id == id, req.HttpContext.RequestAborted);
+            .FirstOrDefaultAsync(d => d.Id == id.ToString(), req.HttpContext.RequestAborted);
         
         if (dungeonDate == null) return new NotFoundResult();
         
@@ -28,12 +28,12 @@ public class Add(DungeonDatesDbContext dbContext)
         {
             var proposedDateResponse = new ProposedDateResponse
             {
-                ProposedDateId = proposedDate.ProposedDateId,
                 Accepted = proposedDate.Accepted,
                 Name = request.Name
             };
             
-            dbContext.ProposedDateResponses.Add(proposedDateResponse);
+            var existingProposedDate = dungeonDate.Dates.First(d => d.Id == proposedDate.ProposedDateId);
+            existingProposedDate.Responses.Add(proposedDateResponse);
         }
         
         await dbContext.SaveChangesAsync(req.HttpContext.RequestAborted);

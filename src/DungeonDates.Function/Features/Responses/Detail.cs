@@ -17,16 +17,14 @@ public class Detail(DungeonDatesDbContext dbContext)
         if(!succeeded) return new NotFoundResult();
         
         var dungeonDate = await dbContext.DungeonDates
-            .Include(dd => dd.Dates)
-            .ThenInclude(d => d.Responses)
             .AsNoTracking()
-            .FirstOrDefaultAsync(dd => dd.Id == id);
+            .FirstOrDefaultAsync(dd => dd.Id == id.ToString());
         
         if (dungeonDate == null) return new NotFoundResult();
         
         var response = new GetDetailResponse
         {
-            Id = dungeonDate.Id,
+            Id = id,
             ProposedDates = dungeonDate.Dates.Select(d => new GetDetailResponse.ProposedDate
             {
                 Id = d.Id,

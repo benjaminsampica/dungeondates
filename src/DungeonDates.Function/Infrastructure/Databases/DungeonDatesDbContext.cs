@@ -1,22 +1,26 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace DungeonDates.Function.Infrastructure.Databases;
 
 public class DungeonDatesDbContext(DbContextOptions<DungeonDatesDbContext> options) : DbContext(options)
 {
     public DbSet<DungeonDate> DungeonDates { get; init; }
-    public DbSet<ProposedDate> ProposedDates { get; init; }
-    public DbSet<ProposedDateResponse> ProposedDateResponses { get; init; }
-}
-
-public class DungeonDatesDbContextFactory : IDesignTimeDbContextFactory<DungeonDatesDbContext>
-{
-    public DungeonDatesDbContext CreateDbContext(string[] args)
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var builder = new DbContextOptionsBuilder<DungeonDatesDbContext>();
-        builder.UseSqlServer();
-        
-        return new(builder.Options);
+        modelBuilder.HasDefaultContainer("DungeonDates");
+
+        modelBuilder.Entity<DungeonDate>(builder =>
+        {
+            builder
+                .HasDefaultTimeToLive(8_640_000) // 100 days.
+                .UseETagConcurrency(); 
+            
+            builder.HasKey(d => d.Id);
+            builder.HasPartitionKey(d => d.Id);
+            builder.Property(d => d.Id).ToJsonProperty("id");
+            builder.HasNoDiscriminator();
+        });
     }
 }
