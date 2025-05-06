@@ -1,36 +1,36 @@
-@inject DialogService DialogService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
 
-<RadzenStack Gap="1rem" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.SpaceBetween" Style="height: 100%;">
-    <RadzenStack>
-        <RadzenRow>
-            <RadzenAlert AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Shade="Shade.Lighter" AllowClose="false" ShowIcon="false">
-                Copy the below url to share the link to your friends to fill out. <b>This link is not retrievable again so do not lose it!</b>
-
-                @{
-                    var url = $"{NavigationManager.BaseUri}respond/{Id}";
-                }
-
-                <RadzenRow>
-                    <RadzenColumn Size="12">
-                        <RadzenFormField Variant="@Variant.Text" class="rz-w-100" >
-                            <ChildContent>
-                                <RadzenTextBox Value="@url" />
-                            </ChildContent>
-                            <End>
-                                <CopyToClipboard Text="@url"/>
-                            </End>
-                        </RadzenFormField>
-                    </RadzenColumn>
-                </RadzenRow>
-            </RadzenAlert>
-        </RadzenRow>
-    </RadzenStack>
-    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
-        <RadzenButton Click="@(() => DialogService.Close(true))" Variant="Variant.Flat" Text="Close" Style="width: 120px" />
-    </RadzenStack>
-</RadzenStack>
+<MudDialog Class="border mud-border-success">
+    <TitleContent>
+        <MudText Typo="Typo.h6" Color="Color.Success">
+            Successfully Created New Date!
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" GutterBottom="true">
+            Copy the below url to share the link to your friends to fill out. <b>This link is not retrievable again so do not lose it!</b>
+        </MudText>
+        <MudTextField T="string" Text="@Url" Variant="Variant.Outlined"
+                      Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="CopyTextToClipboard"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Text" FullWidth="true" Color="Color.Dark">Done</MudButton>
+    </DialogActions>
+</MudDialog>
 
 @code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter, EditorRequired] public Guid Id { get; set; }
+    
+    private void Cancel() => MudDialog.Cancel();
+    
+    private string Url => $"{NavigationManager.BaseUri}respond/{Id}";
+    
+    private async Task CopyTextToClipboard()
+    {
+        Snackbar.Add("Copied url to clipboard.", Severity.Info);
+        await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", Url);
+    }
 }

@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 
 namespace DungeonDates.Client.Pages;
 
-public partial class Respond(HttpClient httpClient, NavigationManager navigationManager, NotificationService notificationService) : IDisposable
+public partial class Respond(HttpClient httpClient, NavigationManager navigationManager, ISnackbar snackbar) : IDisposable
 {
     [Parameter, EditorRequired] public Guid Id { get; set; }
     
@@ -51,11 +51,11 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
 
             response.EnsureSuccessStatusCode();
             
-            notificationService.Notify(new() { Summary = "Success", Detail = "Sucessfully recorded response.", Severity = NotificationSeverity.Success });
+            snackbar.Add("Sucessfully recorded response.", Severity.Success);
         }
         catch
         {
-            notificationService.Notify(new() { Summary = "Error", Detail = "Something went wrong. Please try again later.", Severity = NotificationSeverity.Error });
+            snackbar.Add("Something went wrong. Please try again later.", Severity.Error);
         }
         finally
         {

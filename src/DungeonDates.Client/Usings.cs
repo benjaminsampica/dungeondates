@@ -1,2 +1,1 @@
-global using Radzen;
-global using Radzen.Blazor;
+global using MudBlazor;

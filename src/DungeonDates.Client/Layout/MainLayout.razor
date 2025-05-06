@@ -1,26 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
-<HeadContent>
-    <RadzenTheme Theme="material-dark" />
-</HeadContent>
+<MudThemeProvider/>
+<MudPopoverProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
-<RadzenLayout>
-    <RadzenHeader>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="2">
-            <RadzenImage Path="/icon.png" AlternateText="Dungeon Dates logo" Style="max-height: 50px;"/>
-            <RadzenText TextStyle="TextStyle.DisplayH4" Style="margin-bottom: 0px;">Dungeon Dates</RadzenText>
-        </RadzenStack>
-    </RadzenHeader>
-    <RadzenBody>
-        <div class="rz-p-4">
+<MudLayout>
+    <MudAppBar>
+        <MudImage Src="/icon.png" Height="50" />
+        <MudText Typo="Typo.h4">Dungeon Dates</MudText>
+    </MudAppBar>
+    <MudMainContent Style="padding-bottom: 60px;">
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
             @Body
-        </div>
-    </RadzenBody>
-    <RadzenFooter>
-        <div style="text-align: center">
-            Created By Ben Sampica and open source on <RadzenLink Path="https://github.com/benjaminsampica/dungeondates" Text="GitHub" Target="_blank"/>.
-        </div>
-    </RadzenFooter>
-</RadzenLayout>
-
-<RadzenComponents />
+        </MudContainer>
+    </MudMainContent>
+    <MudAppBar Elevation="1" Style="top: auto; bottom: 0" Dense="true" Fixed="true" Color="Color.Dark">
+        <MudText Align="Align.Center" Style="width: 100%">
+            Created by Ben Sampica and open source on <MudLink Href="https://github.com/benjaminsampica/dungeondates" Target="_blank" Color="Color.Tertiary">GitHub</MudLink>.
+        </MudText>
+    </MudAppBar>
+</MudLayout>

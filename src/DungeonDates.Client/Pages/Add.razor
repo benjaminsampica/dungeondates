@@ -1,31 +1,31 @@
+@using Heron.MudCalendar
+
 @page "/add"
 
-<h3>Schedule A Dungeon Date!</h3>
-
-<RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter" AllowClose="false">
-    Use the calendar below to select days. You can add or remove days simply by touching the day.
-</RadzenAlert>
-
-<RadzenScheduler @ref=@_scheduler style="height: 768px;" TItem="AddCalendarDate" Data="@_calendarDates" 
-                 StartProperty="@nameof(AddCalendarDate.Start)" EndProperty="@nameof(AddCalendarDate.End)"
-                 TextProperty="Text" SelectedIndex="1"
-                 SlotRender="OnSlotRender"
-                 SlotSelect="OnSlotSelectAsync"
-                 AppointmentSelect="OnAppointmentSelectAsync">
-    <RadzenWeekView />
-    <RadzenMonthView />
-</RadzenScheduler>
-
-@if (_invalidForm)
-{
-    <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter" AllowClose="false">
-        Please select one or more days.
-    </RadzenAlert>
-}
-
-<RadzenRow>
-    <RadzenColumn Size="12" class="rz-shadow-4 rz-py-3">
-        <RadzenButton Click="OnSaveClickedAsync" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large" class="rz-w-100" Disabled="_isLoading">
+<MudGrid Spacing="2">
+    <MudItem xs="12">
+        <MudText Typo="Typo.h3">Schedule A Dungeon Date</MudText>
+    </MudItem>
+    <MudItem xs="12">
+        <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
+            Use the calendar below to select days. You can add or remove days simply by touching the day. Then click 'Save'.
+        </MudAlert>
+    </MudItem>
+    <MudItem xs="12">
+        <MudCalendar @ref=_scheduler Items="_calendarDates" CellClicked="OnCellClicked" ItemClicked="OnItemClicked"
+                     ShowDropdownViewSelector="true" ShowPrevNextButtons="false" ToolbarPadding="4"
+                     ShowDay="false" ShowWeek="true" ShowMonth="true" ShowWorkWeek="false"/>
+    </MudItem>
+    <MudItem xs="12">
+        @if (_invalidForm)
+        {
+            <MudAlert Severity="Severity.Warning" ShowCloseIcon="false">
+                Please select one or more days.
+            </MudAlert>
+        }
+    </MudItem>
+    <MudItem xs="12">
+        <MudButton OnClick="OnSaveClickedAsync" Color="Color.Success" Size="Size.Large" FullWidth="true" Disabled="_isLoading" Variant="Variant.Filled">
             @if (_isLoading)
             {
                 <span>Saving...</span>
@@ -34,6 +34,6 @@
             {
                 <span>Save</span>
             }
-        </RadzenButton>
-    </RadzenColumn>
-</RadzenRow>
+        </MudButton>
+    </MudItem>
+</MudGrid>
