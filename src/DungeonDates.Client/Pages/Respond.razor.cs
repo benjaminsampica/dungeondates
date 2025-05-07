@@ -45,18 +45,6 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
         
         response.Accepted = !response.Accepted;
     }
-    
-    private string GetUppercaseInitials(string fullName)
-    {
-        if (string.IsNullOrWhiteSpace(fullName)) return string.Empty;
-
-        var initials = fullName
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            .Where(word => char.IsUpper(word[0]))
-            .Select(word => word[0]);
-
-        return new(initials.ToArray());
-    }
 
     private async Task OnSaveClickedAsync()
     {

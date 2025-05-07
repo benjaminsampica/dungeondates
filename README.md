@@ -2,7 +2,9 @@
 
 Uses
 
-- [Radzen Components](https://blazor.radzen.com/)
+- [MudBlazor](https://mudblazor.com/)
+- Cosmos DB
+- Azure Static Web Apps
 
 # Getting Started
 
