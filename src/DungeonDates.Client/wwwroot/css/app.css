@@ -84,9 +84,9 @@ body.parchment-site {
     z-index: 1;
 
     background:
-            linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent 100%) left,
-            linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent 100%) right;
+            linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent 100%) left,
+            linear-gradient(to left, rgba(0, 0, 0, 0.7), transparent 100%) right;
 
     background-repeat: no-repeat;
-    background-size: 80px 100%, 80px 100%;
+    background-size: 50px 100%, 50px 100%;
 }
