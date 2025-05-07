@@ -10,6 +10,8 @@ public class GetDetailResponse
     public required Guid Id { get; init; }
 
     public required IEnumerable<ProposedDate> ProposedDates { get; init; } = [];
+
+    public bool NoDatesWork => ProposedDates.All(pd => pd.TotalResponseCount != pd.AcceptedResponseCount);
     
     public class ProposedDate
     {

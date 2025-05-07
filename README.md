@@ -6,6 +6,8 @@ Uses
 - Cosmos DB
 - Azure Static Web Apps
 
+The goal of this project was to host this for _$0_ minus the domain cost.
+
 # Getting Started
 
 In order to run any projects you must have:
