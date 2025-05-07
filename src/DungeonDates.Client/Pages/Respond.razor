@@ -9,20 +9,16 @@ else
     <MudGrid Spacing="2">
         <MudItem xs="12">
             <MudPaper Class="pa-4">
-                <MudText Typo="Typo.h3">Respond To Request</MudText>
+                <MudText Typo="Typo.h3">Proposal Response</MudText>
+                @if (_response.NoDatesWork)
+                {
+                    <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
+                        Unfortunately, none of the proposed dates work for all of those who answered.
+                    </MudAlert>
+                }
                 <MudTextField Label="Your Name" @bind-Value=@_name  Variant="Variant.Outlined" Placeholder="John Doe" />
             </MudPaper>
         </MudItem>
-        @if (_response.NoDatesWork)
-        {
-            <MudItem xs="12">
-                <MudPaper Class="pa-4">
-                    <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
-                        Unfortunately, none of the proposed dates work.
-                    </MudAlert>
-                </MudPaper>
-            </MudItem>
-        }
         <MudItem xs="12">
             <MudPaper Class="pa-4">
                 <MudAlert Severity="Severity.Info" ShowCloseIcon="false">

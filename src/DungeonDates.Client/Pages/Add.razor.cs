@@ -23,7 +23,7 @@ public partial class Add(HttpClient httpClient, ISnackbar snackbar, IDialogServi
             return;
         }
         
-        var newCalendarDate = new CalendarItem { Start = date, End = date.AddDays(1).AddSeconds(-1), Text = "Proposed", AllDay = true };
+        var newCalendarDate = new CalendarItem { Start = date, End = date.AddDays(1).AddSeconds(-1), AllDay = true };
         
         _calendarDates.Add(newCalendarDate);
         _scheduler.Refresh();
