@@ -10,7 +10,6 @@ public partial class Add(HttpClient httpClient, ISnackbar snackbar, IDialogServi
     private MudCalendar _scheduler = null!;
     private readonly CancellationTokenSource _cts = new();
     private bool _isLoading;
-    private bool _invalidForm;
     
     private void OnCellClicked(DateTime date)
     {
@@ -42,12 +41,10 @@ public partial class Add(HttpClient httpClient, ISnackbar snackbar, IDialogServi
         
         if (_calendarDates.Count == 0)
         {
-            _invalidForm = true;
             _isLoading = false;
+            snackbar.Add("You must add at least one date.", Severity.Error);
             return;
         }
-
-        _invalidForm = false;
 
         try
         {
@@ -57,7 +54,7 @@ public partial class Add(HttpClient httpClient, ISnackbar snackbar, IDialogServi
 
             var successfulAddResponse = await response.Content.ReadFromJsonAsync<SuccessfulAddResponse>();
             
-            await dialogService.ShowAsync<AddSuccess>(null, new DialogParameters { { nameof(SuccessfulAddResponse.Id), successfulAddResponse!.Id } });
+            await dialogService.ShowAsync<AddSuccess>(null, new DialogParameters { { nameof(SuccessfulAddResponse.Id), successfulAddResponse!.Id } }, new() { BackdropClick = false, CloseButton = true});
         }
         catch
         {

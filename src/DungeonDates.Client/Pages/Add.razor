@@ -2,38 +2,43 @@
 
 @page "/add"
 
+<style>
+    .mud-cal-toolbar .mud-menu { display: none; }
+</style>
+
 <MudGrid Spacing="2">
     <MudItem xs="12">
-        <MudText Typo="Typo.h3">Schedule A Dungeon Date</MudText>
-    </MudItem>
-    <MudItem xs="12">
-        <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
-            Use the calendar below to select days. You can add or remove days simply by touching the day. Then click 'Save'.
-        </MudAlert>
+        <MudPaper Class="pa-4">
+            <MudText Typo="Typo.h3">Schedule A Date</MudText>
+            <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
+                Use the calendar below to select days. You can add or remove days simply by touching the day. Then click 'Save'.
+            </MudAlert>
+        </MudPaper>
+
     </MudItem>
     <MudItem xs="12">
         <MudCalendar @ref=_scheduler Items="_calendarDates" CellClicked="OnCellClicked" ItemClicked="OnItemClicked"
-                     ShowDropdownViewSelector="true" ShowPrevNextButtons="false" ToolbarPadding="4"
-                     ShowDay="false" ShowWeek="true" ShowMonth="true" ShowWorkWeek="false"/>
-    </MudItem>
-    <MudItem xs="12">
-        @if (_invalidForm)
-        {
-            <MudAlert Severity="Severity.Warning" ShowCloseIcon="false">
-                Please select one or more days.
-            </MudAlert>
-        }
+                     ShowDropdownViewSelector="true" ShowPrevNextButtons="true" ToolbarPadding="0" View="CalendarView.Month"
+                     ShowDay="false" ShowWeek="false" ShowMonth="true" ShowWorkWeek="false" Class="pa-4">
+            <MonthTemplate>
+                <div class="d-flex justify-center">
+                    <MudIcon Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" Size="Size.Large"/>
+                </div>
+            </MonthTemplate>
+        </MudCalendar>
     </MudItem>
     <MudItem xs="12">
         <MudButton OnClick="OnSaveClickedAsync" Color="Color.Success" Size="Size.Large" FullWidth="true" Disabled="_isLoading" Variant="Variant.Filled">
-            @if (_isLoading)
-            {
-                <span>Saving...</span>
-            }
-            else
-            {
-                <span>Save</span>
-            }
+            <MudText Typo="Typo.h4" GutterBottom="false">
+                @if (_isLoading)
+                {
+                    <span>Saving...</span>
+                }
+                else
+                {
+                    <span>Save</span>
+                }
+            </MudText>
         </MudButton>
     </MudItem>
 </MudGrid>

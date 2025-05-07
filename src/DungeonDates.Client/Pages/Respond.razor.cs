@@ -9,11 +9,12 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
     [Parameter, EditorRequired] public Guid Id { get; set; }
     
     private GetDetailResponse? _response;
-    private PostDetailRequest _request = new();
+    private readonly PostDetailRequest _request = new();
     private readonly CancellationTokenSource _cts = new();
 
     private string? _name;
-    
+
+    private bool _formHasBeenSubmitted;
     private bool _isLoading;
     
     protected override async Task OnInitializedAsync() => await LoadResponsesAsync();
@@ -29,29 +30,54 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
         }
 
         _response = await response.Content.ReadFromJsonAsync<GetDetailResponse>();
+
+        foreach (var proposedDate in _response.ProposedDates)
+        {
+            _request.ProposedDateResponses.Add(new() { Accepted = false, ProposedDateId = proposedDate.Id });
+        }
+        
         _request.Id = Id;
     }
 
     private void OnProposedDateClick(GetDetailResponse.ProposedDate proposedDate)
     {
-        var response = _request.ProposedDateResponses.FirstOrDefault(pdr => pdr.ProposedDateId == proposedDate.Id)
-            ?? new PostDetailRequest.ProposedDate
-            {
-                ProposedDateId = proposedDate.Id
-            };
-
+        var response = _request.ProposedDateResponses.First(pdr => pdr.ProposedDateId == proposedDate.Id);
+        
         response.Accepted = !response.Accepted;
+    }
+    
+    private string GetUppercaseInitials(string fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName)) return string.Empty;
+
+        var initials = fullName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Where(word => char.IsUpper(word[0]))
+            .Select(word => word[0]);
+
+        return new(initials.ToArray());
     }
 
     private async Task OnSaveClickedAsync()
     {
+        _isLoading = true;
+
+        if (string.IsNullOrEmpty(_name))
+        {
+            _isLoading = false;
+            snackbar.Add("You must add a name.", Severity.Error);
+            return;
+        }
+        
         try
         {
+            _request.Name = _name;   
             var response = await httpClient.PostAsJsonAsync($"detail/{Id}", _request, _cts.Token);
 
             response.EnsureSuccessStatusCode();
             
             snackbar.Add("Sucessfully recorded response.", Severity.Success);
+            _formHasBeenSubmitted = true;
         }
         catch
         {

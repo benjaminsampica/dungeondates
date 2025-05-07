@@ -13,10 +13,14 @@
             Copy the below url to share the link to your friends to fill out. <b>This link is not retrievable again so do not lose it!</b>
         </MudText>
         <MudTextField T="string" Text="@Url" Variant="Variant.Outlined"
-                      Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="CopyTextToClipboard"></MudTextField>
+                      Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="CopyTextToClipboard" AdornmentColor="Color.Info"/>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel" Variant="Variant.Text" FullWidth="true" Color="Color.Dark">Done</MudButton>
+        <MudButton OnClick="Cancel" Variant="Variant.Text" FullWidth="true" Color="Color.Dark">
+            <MudText Typo="Typo.h6" GutterBottom="false">
+                Done
+            </MudText>
+        </MudButton>
     </DialogActions>
 </MudDialog>
 

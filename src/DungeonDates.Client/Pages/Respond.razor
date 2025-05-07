@@ -1,63 +1,84 @@
 @page "/respond/{id:guid}"
 
-@* @if (_response is null) *@
-@* { *@
-@*     <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" /> *@
-@* } *@
-@* else *@
-@* { *@
-@*     <RadzenRow> *@
-@*         <RadzenColumn Size="12"> *@
-@*             <RadzenCard> *@
-@*                 <RadzenText TextStyle="TextStyle.H1">Respond To Request</RadzenText> *@
-@*             </RadzenCard> *@
-@*         </RadzenColumn> *@
-@*         <RadzenColumn Size="12"> *@
-@*             <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Name</RadzenText> *@
-@*             <RadzenTextBox Placeholder="Enter your name..." @bind-Value=@_name Style="width: 100%" /> *@
-@*         </RadzenColumn> *@
-@*         @if (!string.IsNullOrWhiteSpace(_name)) *@
-@*         { *@
-@*             <RadzenColumn Size="12"> *@
-@*                 <RadzenStack> *@
-@*                     <RadzenCardGroup> *@
-@*                         @foreach (var proposedDate in _response.ProposedDates) *@
-@*                         { *@
-@*                             <RadzenCard Variant="@Variant.Filled"> *@
-@*                                 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween"> *@
-@*                                     <RadzenToggleButton ButtonStyle="ButtonStyle.Danger" Icon="close" *@
-@*                                                         ToggleButtonStyle="ButtonStyle.Success" ToggleShade="Shade.Default" ToggleIcon="check_circle" Click=@(_ => OnProposedDateClick(proposedDate)) *@
-@*                                                         InputAttributes="@(new Dictionary<string,object> { { "aria-label", "Large" }})"/> *@
-@*                                     <RadzenText TextStyle="TextStyle.H3">@proposedDate.StartDate.ToString("d")</RadzenText> *@
-@*                                     <RadzenText TextStyle="TextStyle.H3" class="rz-m-0"> *@
-@*                                         @($"{proposedDate.AcceptedResponseCount} / {proposedDate.TotalResponseCount}") *@
-@*                                     </RadzenText> *@
-@*                                 </RadzenStack> *@
-@*                                 @foreach (var response in proposedDate.Responses) *@
-@*                                 { *@
-@*                                     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" class="rz-p-4"> *@
-@*                                         <RadzenText Text="@response.Name" TextStyle="TextStyle.H6" /> *@
-@*                                         <RadzenIcon Icon="check" IconColor="@Colors.Success"/> *@
-@*                                     </RadzenStack> *@
-@*                                 } *@
-@*                             </RadzenCard> *@
-@*                         } *@
-@*                     </RadzenCardGroup> *@
-@*                 </RadzenStack> *@
-@*             </RadzenColumn> *@
-@*             <RadzenColumn Size="12"> *@
-@*                 <RadzenButton Click="OnSaveClickedAsync" ButtonStyle="ButtonStyle.Success" Size="ButtonSize.Large" class="rz-w-100" Disabled="_isLoading"> *@
-@*                     @if (_isLoading) *@
-@*                     { *@
-@*                         <span>Saving...</span> *@
-@*                     } *@
-@*                     else *@
-@*                     { *@
-@*                         <span>Save</span> *@
-@*                     } *@
-@*                 </RadzenButton> *@
-@*             </RadzenColumn> *@
-@*         } *@
-@*     </RadzenRow> *@
-@* } *@
-@* *@
+@if (_response is null)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+else
+{
+    <MudGrid Spacing="2">
+        <MudItem xs="12">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h3">Respond To Request</MudText>
+                <MudTextField Label="Your Name" @bind-Value=@_name FullWidth="true" Variant="Variant.Outlined" Placeholder="John Doe" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12">
+            <MudPaper Class="pa-4">
+                <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
+                    Please answer whether you are available for each of the given date(s) below.
+                </MudAlert>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12">
+            <MudGrid>
+                @foreach (var proposedDate in _response.ProposedDates)
+                {
+                    <MudItem xs="12" md="6" lg="4">
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h3" Color="Color.Dark" GutterBottom="false">@proposedDate.StartDate.ToString("d")</MudText>
+                                </CardHeaderContent>
+                                <CardHeaderActions>
+                                    <MudText Typo="Typo.h3" Color="Color.Secondary" GutterBottom="false">
+                                        @($"{proposedDate.AcceptedResponseCount} / {proposedDate.TotalResponseCount}")
+                                    </MudText>
+                                </CardHeaderActions>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                    @foreach (var response in proposedDate.Responses)
+                                    {
+                                        @if (response.Accepted)
+                                        {
+                                            <MudChip T="string" Icon="@Icons.Material.Filled.Check" Color="Color.Success" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
+                                        }
+                                        else
+                                        {
+                                            <MudChip T="string" Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
+                                        }
+                                    }
+                            </MudCardContent>
+                            <MudCardActions>
+                                @if (!_formHasBeenSubmitted)
+                                {
+                                    <MudToggleIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Close" Variant="Variant.Filled"
+                                                         ToggledIcon="@Icons.Material.Filled.Check" ToggledColor="Color.Success" ToggledVariant="Variant.Filled"
+                                                         ToggledChanged="() => OnProposedDateClick(proposedDate)" Size="Size.Large" Style="width: 100%"/>
+                                }
+                            </MudCardActions>
+                        </MudCard>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudItem>
+        @if (!_formHasBeenSubmitted)
+        {
+            <MudItem xs="12">
+                <MudButton OnClick="OnSaveClickedAsync" Color="Color.Success" Variant="Variant.Filled" Size="Size.Large" FullWidth="true" Disabled="_isLoading">
+                    <MudText Typo="Typo.h4" GutterBottom="false">
+                        @if (_isLoading)
+                        {
+                            <span>Saving...</span>
+                        }
+                        else
+                        {
+                            <span>Save</span>
+                        }
+                    </MudText>
+                </MudButton>
+            </MudItem>
+        }
+    </MudGrid>
+}
+

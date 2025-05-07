@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider/>
+<MudThemeProvider Theme="_theme"/>
 <MudPopoverProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
@@ -9,15 +9,53 @@
     <MudAppBar>
         <MudImage Src="/icon.png" Height="50" />
         <MudText Typo="Typo.h4">Dungeon Dates</MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/benjaminsampica/dungeondates" Target="_blank"></MudIconButton>
     </MudAppBar>
-    <MudMainContent Style="padding-bottom: 60px;">
-        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="pb-2">
             @Body
         </MudContainer>
     </MudMainContent>
-    <MudAppBar Elevation="1" Style="top: auto; bottom: 0" Dense="true" Fixed="true" Color="Color.Dark">
-        <MudText Align="Align.Center" Style="width: 100%">
-            Created by Ben Sampica and open source on <MudLink Href="https://github.com/benjaminsampica/dungeondates" Target="_blank" Color="Color.Tertiary">GitHub</MudLink>.
-        </MudText>
-    </MudAppBar>
 </MudLayout>
+
+@code {
+
+    private MudTheme _theme = new()
+    {
+        PaletteLight = new()
+        {
+            Primary = "#5C4434",      // Dark brown ink
+            Secondary = "#C2B280",    // Aged parchment
+            Background = "#F9F5E3",   // Off-white parchment
+            Surface = "#EFE8D8",      // Light background for cards
+            Success = "#6B8E23",       // Olive green (earthy success)
+            Warning = "#D4A017",       // Burnished gold (aged caution)
+            Error = "#8B0000",         // Dark crimson (dried blood danger)
+            Info = "#3B6A9D",
+            AppbarBackground = "#5C4434",
+            DrawerBackground = "#8D775F",  // Worn leather feel
+            TextPrimary = "#2F2F2F",  // Deep charcoal ink
+            TextSecondary = "#5C4434",
+            ActionDefault = "#A68A64", // Muted brass
+            ActionDisabled = "#CCC1B7",
+            Divider = "#D2C7B2",
+            TableLines = "#D2C7B2"
+        },
+        Typography = new()
+        {
+            Default = new DefaultTypography
+            {
+                FontFamily = ["Cormorant Garamond", "serif"],
+                FontSize = "1rem"
+            },
+            H1 = new H1Typography { FontFamily = ["IM Fell English", "serif"] },
+            H2 = new H2Typography { FontFamily = ["IM Fell English", "serif"] },
+            H3 = new H3Typography { FontFamily = ["IM Fell English", "serif"] },
+            H4 = new H4Typography { FontFamily = ["IM Fell English", "serif"] },
+            H5 = new H5Typography { FontFamily = ["IM Fell English", "serif"] },
+            H6 = new H6Typography { FontFamily = ["IM Fell English", "serif"] }
+        }
+    };
+
+}

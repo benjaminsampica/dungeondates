@@ -1,19 +1,14 @@
-﻿@layout HomeLayout
+﻿@layout MainLayout
 
 @page "/"
 
 <PageTitle>Home</PageTitle>
 
-<MudGrid>
-    <MudItem xs="3"></MudItem>
-    <MudItem xs="6" Class="mx-auto">
-        <MudImage Src="/icon.png" Height="300"/>
-        <MudText Typo="Typo.h1" Align="Align.Center" GutterBottom="true">Dungeon Dates</MudText>
-    </MudItem>
-    <MudItem xs="3"></MudItem>
-    <MudItem xs="3"></MudItem>
-    <MudItem xs="6">
-        <MudText Typo="Typo.h4" Align="Align.Center">Easily and quickly schedule your next session</MudText>
-        <MudButton Href="/add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">Schedule Now</MudButton>
-    </MudItem>
-</MudGrid>
+<MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+    <MudImage Src="/icon.png" Height="300"/>
+    <MudText Typo="Typo.h1" Align="Align.Center" GutterBottom="false">Dungeon Dates</MudText>
+    <MudText Typo="Typo.h4" Align="Align.Center">Easily and quickly schedule your next session</MudText>
+    <MudButton Href="/add" Variant="Variant.Filled" Color="Color.Primary" Style="width: 300px; height: 100px; font-size: 2rem;">
+        Schedule Now
+    </MudButton>
+</MudStack>
