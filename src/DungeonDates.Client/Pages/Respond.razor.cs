@@ -64,7 +64,7 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
 
             response.EnsureSuccessStatusCode();
             
-            snackbar.Add("Sucessfully recorded response.", Severity.Success);
+            snackbar.Add("Successfully saved your response.", Severity.Success);
             _formHasBeenSubmitted = true;
         }
         catch

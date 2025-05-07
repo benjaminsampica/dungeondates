@@ -10,7 +10,7 @@
     </TitleContent>
     <DialogContent>
         <MudText Typo="Typo.body1" GutterBottom="true">
-            Copy the below url to share the link to your friends to fill out. <b>This link is not retrievable again so do not lose it!</b>
+            Copy the below link to share to your friends to fill out. <b>This link is not retrievable again so do not lose it!</b>
         </MudText>
         <MudTextField T="string" Text="@Url" Variant="Variant.Outlined"
                       Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="CopyTextToClipboard" AdornmentColor="Color.Info"/>
@@ -34,7 +34,7 @@
     
     private async Task CopyTextToClipboard()
     {
-        Snackbar.Add("Copied url to clipboard.", Severity.Info);
+        Snackbar.Add("Copied link to clipboard.", Severity.Info);
         await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", Url);
     }
 }

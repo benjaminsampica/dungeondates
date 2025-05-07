@@ -54,7 +54,7 @@ html, body {
 
 .loading-progress-text:after {
     content: var(--blazor-load-percentage-text);
-    color: rgba(89,74,226,1);
+    color: rgba(92, 68, 52, 1);
     font-weight: bold;
     font-size: 60px;
 }
