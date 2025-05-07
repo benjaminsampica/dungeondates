@@ -11,7 +11,7 @@ else
     <MudGrid Spacing="2">
         <MudItem xs="12">
             <MudPaper Class="pa-4">
-                <MudText Typo="Typo.h3">Proposal Response</MudText>
+                <MudText Typo="Typo.h3" Color="Color.Primary" >Proposal Response</MudText>
                 @if (_response.NoDatesWork)
                 {
                     <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
@@ -36,10 +36,10 @@ else
                         <MudCard>
                             <MudCardHeader>
                                 <CardHeaderContent>
-                                    <MudText Typo="Typo.h4" Color="Color.Dark" GutterBottom="false">@proposedDate.StartDate.ToString("ddd | MMM dd yyyy")</MudText>
+                                    <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="false">@proposedDate.StartDate.ToString("ddd | MMM dd yyyy")</MudText>
                                 </CardHeaderContent>
                                 <CardHeaderActions>
-                                    <MudText Typo="Typo.h4" Color="Color.Secondary" GutterBottom="false">
+                                    <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="false">
                                         @($"{proposedDate.AcceptedResponseCount} | {proposedDate.TotalResponseCount}")
                                     </MudText>
                                 </CardHeaderActions>
