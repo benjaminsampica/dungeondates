@@ -21,7 +21,9 @@ public class Add(DungeonDatesDbContext dbContext)
         {
             StartDate = cd.Start,
             EndDate = cd.End
-        }).ToArray();
+        })
+        .OrderBy(cd => cd.StartDate)
+        .ToArray();
 
         var dungeonDate = new DungeonDate
         {
