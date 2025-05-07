@@ -30,8 +30,8 @@
         </MudCalendar>
     </MudItem>
     <MudItem xs="12">
-        <MudButton OnClick="OnSaveClickedAsync" Color="Color.Success" Size="Size.Large" FullWidth="true" Disabled="_isLoading" Variant="Variant.Filled">
-            <MudText Typo="Typo.h4" GutterBottom="false">
+        <MudButton OnClick="OnSaveClickedAsync" Color="Color.Primary" Size="Size.Large" FullWidth="true" Disabled="_isLoading" Variant="Variant.Filled">
+            <MudText Typo="Typo.h4" GutterBottom="false" Color="Color.Secondary">
                 @if (_isLoading)
                 {
                     <span>Saving...</span>

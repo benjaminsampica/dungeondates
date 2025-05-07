@@ -73,8 +73,8 @@ else
         @if (!_formHasBeenSubmitted)
         {
             <MudItem xs="12">
-                <MudButton OnClick="OnSaveClickedAsync" Color="Color.Success" Variant="Variant.Filled" Size="Size.Large" FullWidth="true" Disabled="_isLoading">
-                    <MudText Typo="Typo.h4" GutterBottom="false">
+                <MudButton OnClick="OnSaveClickedAsync" Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large" FullWidth="true" Disabled="_isLoading">
+                    <MudText Typo="Typo.h4" GutterBottom="false" Color="Color.Secondary">
                         @if (_isLoading)
                         {
                             <span>Saving...</span>
