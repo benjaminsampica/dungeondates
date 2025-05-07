@@ -2,15 +2,132 @@
 
 @page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Home - Dungeon Dates</PageTitle>
 
 <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
-    <MudImage Src="/icon.png" Height="250"/>
-    <MudText Typo="Typo.h1" Align="Align.Center" GutterBottom="false">Dungeon Dates</MudText>
-    <MudText Typo="Typo.h4" Align="Align.Center">Easily and quickly schedule your next session</MudText>
+    <MudImage Src="/icon.png" Height="200"/>
+    <MudText Typo="Typo.h1" Align="Align.Center" GutterBottom="false" Color="Color.Primary">Dungeon Dates</MudText>
+    <MudText Typo="Typo.h4" Align="Align.Center">Quickly & easily schedule your next session</MudText>
+    <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h2" Align="Align.Center" Color="Color.Primary">The quest to find a date ends here</MudText>
+    </MudStack>
     <MudButton Href="/add" Variant="Variant.Filled" Color="Color.Primary" Style="width: 100%; height: 100px; max-width: 500px;">
-        <MudText Typo="Typo.h3">
+        <MudText Typo="Typo.h3" GutterBottom="false" Color="Color.Secondary">
             Schedule Now
         </MudText>
     </MudButton>
 </MudStack>
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
+    <MudDivider Class="pt-4"/>
+
+    <MudText Typo="Typo.h2" Align="Align.Center" Color="Color.Primary">
+        What Adventurers Are Saying
+    </MudText>
+
+    <MudGrid Justify="Justify.Center">
+        @foreach (var testimonial in Testimonal.Testimonals)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="2" Class="pa-4" Style="min-height: 200px; height: 100%;">
+                    <MudStack Justify="Justify.SpaceBetween" Style="height: 100%;">
+                        <MudText Typo="Typo.h6">
+                            "@testimonial.Quote"
+                        </MudText>
+                        <MudText Typo="Typo.subtitle1" Align="Align.Right" Color="Color.Primary">
+                            — @testimonial.Author
+                        </MudText>
+                    </MudStack>
+                </MudPaper>
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
+
+@code {
+
+    private class Testimonal
+    {
+        public string Quote { get; set; } = string.Empty; 
+        public string Author { get; set; } = string.Empty;
+
+        public static List<Testimonal> Testimonals => new()
+        {
+            new()
+            {
+                Quote = "For the first time in 6 months, our whole party actually showed up. Dungeon Dates is more powerful than any resurrection spell.",
+                Author = "Thrombin the Wise, Level 12 Diviner"
+            },
+            new()
+            {
+                Quote = "I used to fear scheduling more than dragons. Now? I fear brunch invitations.",
+                Author = "Elora Oakshield, Elf Ranger"
+            },
+            new()
+            {
+                Quote = "I didn’t think our barbarian could even read a calendar, but somehow he RSVP’d. This site is cursed. In a good way.",
+                Author = "Jarnak the Organizer"
+            },
+            new()
+            {
+                Quote = "We scheduled a session in under 5 minutes. I suspect time magic.",
+                Author = "Sister Heloise, Cleric of Timora"
+            },
+            new()
+            {
+                Quote = "As a bard, I’ve wooed countless hearts. But this—this site wooed my friends into actually committing to a date.",
+                Author = "Vespian D’Lore, Bard Extraordinaire"
+            },
+            new()
+            {
+                Quote = "I cast sending. I cast message. Nothing worked. But Dungeon Dates? That did the trick.",
+                Author = "Crindle the Chronically Ignored Wizard"
+            },
+            new()
+            {
+                Quote = "Our rogue showed up *on time.* That alone earns five stars.",
+                Author = "Captain Belch, Professional Dungeon Delver"
+            },
+            new()
+            {
+                Quote = "Wow, a tool that actually got my group to agree on something. What’s next, world peace?",
+                Author = "Zarnok the Cynical, Scheduling Skeptic"
+            },
+            new()
+            {
+                Quote = "I used to roll initiative faster than we picked a date. Now it's... marginally faster.",
+                Author = "Felix 'The Bitter' Greycloak"
+            },
+            new()
+            {
+                Quote = "If Dungeon Dates can make Steve the Bard commit to a time, I’m ready to believe in miracles again.",
+                Author = "Mira the Jaded"
+            },
+            new()
+            {
+                Quote = "Sure, it works. But now I have no excuse to cancel. Thanks a lot.",
+                Author = "Torbin, Master of Avoidance"
+            },
+            new()
+            {
+                Quote = "Great, now I’m actually *playing* D&D instead of planning to maybe someday play D&D.",
+                Author = "Kevan, Keeper of Ghost Campaigns"
+            },
+            new()
+            {
+                Quote = "I was really enjoying the part where we all gave up and just rewatched Critical Role. Now we’re playing again. Ugh.",
+                Author = "Thalia, Reluctant Paladin"
+            },
+            new()
+            {
+                Quote = "Dungeon Dates made scheduling so easy it feels like cheating. Can I get banned for this?",
+                Author = "Xarnax, Probably a Warlock"
+            },
+            new()
+            {
+                Quote = "It works too well. We even scheduled a *session zero*. Who does that?",
+                Author = "Grimble, Veteran of Five Abandoned Campaigns"
+            },
+        };
+    }
+
+}
