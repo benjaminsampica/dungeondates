@@ -11,11 +11,11 @@ else
     <MudGrid Spacing="2">
         <MudItem xs="12">
             <MudPaper Class="pa-4">
-                <MudText Typo="Typo.h3" Color="Color.Primary" >Proposal Response</MudText>
+                <MudText Typo="Typo.h3" Color="Color.Primary">Proposal Response</MudText>
                 @if (_response.NoDatesWork)
                 {
                     <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
-                        Unfortunately, none of the proposed dates work for all of those who answered.
+                        Sorry, none of the dates proposed worked for all responders of this proposal. <MudLink Href="/add" Color="Color.Info">Try again?</MudLink>
                     </MudAlert>
                 }
                 <MudTextField Label="Your Name" @bind-Value=@_name  Variant="Variant.Outlined" Placeholder="Drizzt Do'Urden" />
