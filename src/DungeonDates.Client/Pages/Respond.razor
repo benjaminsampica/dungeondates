@@ -15,7 +15,7 @@ else
                 @if (_response.NoDatesWork)
                 {
                     <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
-                        Sorry, none of the dates proposed worked for all responders of this proposal. <MudLink Href="/add" Color="Color.Info">Try again?</MudLink>
+                        Alas, the stars refuse to align - none of these dates please all the adventurers. <MudLink Href="/add" Color="Color.Info">Summon new dates?</MudLink>
                     </MudAlert>
                 }
                 <MudTextField Label="Your Name" @bind-Value=@_name  Variant="Variant.Outlined" Placeholder="Drizzt Do'Urden" />
