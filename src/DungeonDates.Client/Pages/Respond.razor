@@ -36,13 +36,13 @@ else
                         <MudCard>
                             <MudCardHeader>
                                 <CardHeaderContent>
-                                    <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="false">@proposedDate.StartDate.ToString("ddd | MMM dd yyyy")</MudText>
+                                    <MudStack Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Row="true">
+                                        <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="false">@proposedDate.StartDate.ToString("ddd | MMM dd yyyy")</MudText>
+                                        <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="false">
+                                            @($"{proposedDate.AcceptedResponseCount} | {proposedDate.TotalResponseCount}")
+                                        </MudText>
+                                    </MudStack>
                                 </CardHeaderContent>
-                                <CardHeaderActions>
-                                    <MudText Typo="Typo.h4" Color="Color.Primary" GutterBottom="false">
-                                        @($"{proposedDate.AcceptedResponseCount} | {proposedDate.TotalResponseCount}")
-                                    </MudText>
-                                </CardHeaderActions>
                             </MudCardHeader>
                             <MudCardContent>
                                     @foreach (var response in proposedDate.Responses)

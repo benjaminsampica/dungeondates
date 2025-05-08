@@ -59,24 +59,19 @@ html, body {
     font-size: 60px;
 }
 
-/* Tiled parchment background across the whole site */
-/* parchment background still applied to body */
 body.parchment-site {
     margin: 0;
     padding: 0;
     position: relative;
     background: url('/parchment-tile.jpeg') repeat;
     background-size: auto;
-    color: #2d1b00;
 }
 
-/* Content stays above the fade layer */
 .content-wrapper {
     position: relative;
     z-index: 2;
 }
 
-/* Edge fade is now just a visual backdrop */
 .background-fade {
     position: fixed;
     inset: 0;
@@ -89,4 +84,14 @@ body.parchment-site {
 
     background-repeat: no-repeat;
     background-size: 50px 100%, 50px 100%;
+}
+
+.fantasy-divider {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    opacity: 1;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    margin: auto;
 }
