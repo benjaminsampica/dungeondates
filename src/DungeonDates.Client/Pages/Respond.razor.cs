@@ -31,7 +31,7 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
 
         _response = await response.Content.ReadFromJsonAsync<GetDetailResponse>();
 
-        foreach (var proposedDate in _response.ProposedDates)
+        foreach (var proposedDate in _response!.ProposedDates)
         {
             _request.ProposedDateResponses.Add(new() { Accepted = false, ProposedDateId = proposedDate.Id });
         }
