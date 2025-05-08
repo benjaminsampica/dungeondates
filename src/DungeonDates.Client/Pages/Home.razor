@@ -25,7 +25,7 @@
         @foreach (var testimonial in Testimonal.Testimonals)
         {
             <MudItem xs="12" sm="6" md="4">
-                <MudPaper Elevation="2" Class="pa-4" Style="min-height: 200px; height: 100%;">
+                <MudPaper Style="min-height: 150px; height: 100%; background: transparent;" Elevation="0" Class="px-4">
                     <MudStack Justify="Justify.SpaceBetween" Style="height: 100%;">
                         <MudText Typo="Typo.h6">
                             "@testimonial.Quote"
@@ -96,7 +96,7 @@
             },
             new()
             {
-                Quote = "It works too well. We even scheduled a *session zero*. Who does that?",
+                Quote = "It works too well. We even scheduled a *session zero*. Who does that? It is complete and utter madness.",
                 Author = "Grimble, Veteran of Five Abandoned Campaigns"
             },
             new()
