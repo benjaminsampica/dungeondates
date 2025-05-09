@@ -4,36 +4,37 @@
 
 @if (_response is null)
 {
-    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" Size="Size.Large"/>
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7"/>
 }
 else
 {
     <MudGrid Spacing="2">
-        <MudItem xs="12">
-            <MudPaper Class="pa-4">
-                <MudText Typo="Typo.h3" Color="Color.Primary">Proposal Response</MudText>
-                @if (_response.NoDatesWork)
-                {
-                    <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
-                        Alas, the stars refuse to align - none of these dates please all the adventurers. <MudLink Href="/add" Color="Color.Info">Summon new dates?</MudLink>
-                    </MudAlert>
-                }
-                <MudTextField Label="Your Name" @bind-Value=@_name  Variant="Variant.Outlined" Placeholder="Drizzt Do'Urden" />
-            </MudPaper>
+        <MudItem xs="12" Class="px-4">
+            <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">Proposal Response</MudText>
         </MudItem>
-        <MudItem xs="12">
-            <MudPaper Class="pa-4">
-                <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
-                    Please answer whether you are available for each of the given date(s) below.
+        <img src="/divider.png" alt="Fancy divider" class="fantasy-divider py-1" />
+        <MudItem xs="12" Class="py-2 px-4">
+            <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
+                Enter your name and then answer whether you are available for each of the given date(s) below.
+            </MudAlert>
+        </MudItem>
+        <MudItem xs="12" Class="px-4">
+            @if (_response.NoDatesWork)
+            {
+                <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
+                    Alas, the stars refuse to align - none of these dates please all the adventurers. <MudLink Href="/add" Color="Color.Error" Style="font-weight: bolder">Summon new dates?</MudLink>
                 </MudAlert>
-            </MudPaper>
+            }
         </MudItem>
-        <MudItem xs="12">
+        <MudItem xs="12" Class="px-4">
+            <MudTextField Label="Your Name" @bind-Value=@_name Variant="Variant.Outlined" Placeholder="Drizzt Do'Urden"/>
+        </MudItem>
+        <MudItem xs="12" Class="px-4">
             <MudGrid Spacing="2">
                 @foreach (var proposedDate in _response.ProposedDates)
                 {
                     <MudItem xs="12" md="6" lg="4">
-                        <MudCard>
+                        <MudCard Style="background-color: transparent;" Elevation="0" Outlined="true">
                             <MudCardHeader>
                                 <CardHeaderContent>
                                     <MudStack Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Row="true" Spacing="0">
@@ -45,17 +46,17 @@ else
                                 </CardHeaderContent>
                             </MudCardHeader>
                             <MudCardContent>
-                                    @foreach (var response in proposedDate.Responses)
+                                @foreach (var response in proposedDate.Responses)
+                                {
+                                    @if (response.Accepted)
                                     {
-                                        @if (response.Accepted)
-                                        {
-                                            <MudChip T="string" Icon="@Icons.Material.Filled.Check" Color="Color.Success" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
-                                        }
-                                        else
-                                        {
-                                            <MudChip T="string" Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
-                                        }
+                                        <MudChip T="string" Icon="@Icons.Material.Filled.Check" Color="Color.Success" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
                                     }
+                                    else
+                                    {
+                                        <MudChip T="string" Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
+                                    }
+                                }
                             </MudCardContent>
                             <MudCardActions>
                                 @if (!_formHasBeenSubmitted)
@@ -88,5 +89,6 @@ else
             </MudItem>
         }
     </MudGrid>
+    <img src="/divider.png" alt="Fancy divider" class="fantasy-divider py-2" />
 }
 

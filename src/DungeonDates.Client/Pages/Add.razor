@@ -6,22 +6,21 @@
 
 <style>
     .mud-cal-toolbar .mud-menu { display: none; }
+    .mud-cal-month-link:hover { background-color: rgba(92, 68, 52, 0.1); }
 </style>
 
 <MudGrid Spacing="2">
-    <MudItem xs="12">
-        <MudPaper Class="pa-4">
-            <MudText Typo="Typo.h3" Color="Color.Primary" >Propose Dates</MudText>
-            <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
-                Use the calendar below to select days. You can add or remove days simply by touching the day. Then click 'Save'.
-            </MudAlert>
-        </MudPaper>
-
+    <MudItem xs="12" Class="px-4">
+        <MudText Typo="Typo.h3" Color="Color.Primary" Class="px-4" Align="Align.Center">Propose Dates</MudText>
     </MudItem>
+    <img src="/divider.png" alt="Fancy divider" class="fantasy-divider py-1"/>
     <MudItem xs="12">
+        <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
+            Use the calendar below to select days. You can add or remove days simply by touching the day. Then click 'Save'.
+        </MudAlert>
         <MudCalendar @ref=_scheduler Items="_calendarDates" CellClicked="OnCellClicked" ItemClicked="OnItemClicked"
                      ShowDropdownViewSelector="true" ShowPrevNextButtons="true" ToolbarPadding="0" View="CalendarView.Month"
-                     ShowDay="false" ShowWeek="false" ShowMonth="true" ShowWorkWeek="false" Class="pa-4">
+                     ShowDay="false" ShowWeek="false" ShowMonth="true" ShowWorkWeek="false" Class="pa-4" Style="background-color: transparent; box-shadow: none;">
             <MonthTemplate>
                 <div class="d-flex justify-center">
                     <MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" Style="width: 50px; height: 50px;"/>
@@ -44,3 +43,4 @@
         </MudButton>
     </MudItem>
 </MudGrid>
+<img src="/divider.png" alt="Fancy divider" class="fantasy-divider py-2" />
