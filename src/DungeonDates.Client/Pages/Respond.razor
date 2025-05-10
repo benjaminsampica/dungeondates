@@ -9,27 +9,29 @@
 else
 {
     <MudGrid Spacing="2">
-        <MudItem xs="12" Class="px-4">
+        <MudItem xs="12">
             <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">Proposal Response</MudText>
         </MudItem>
-        <img src="/divider.png" alt="Fancy divider" class="fantasy-divider py-1" />
+        <MudItem xs="12">
+            <img src="/divider.png" alt="Fancy divider" class="fantasy-divider"/>
+        </MudItem>
         @if (_response.NoDatesWork)
         {
-            <MudItem xs="12" Class="px-4">
+            <MudItem xs="12">
                 <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
                     Alas, the stars refuse to align - none of these dates please all the adventurers. <MudLink Href="/add" Color="Color.Error" Style="font-weight: bolder">Summon new dates?</MudLink>
                 </MudAlert>
             </MudItem>
         }
-        <MudItem xs="12" Class="py-2 px-4">
+        <MudItem xs="12" Class="py-2">
             <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
                 Enter your name and then answer whether you are available for each of the given date(s) below.
             </MudAlert>
         </MudItem>
-        <MudItem xs="12" Class="px-4">
+        <MudItem xs="12">
             <MudTextField Label="Your Name" @bind-Value=@_name Variant="Variant.Outlined" Placeholder="Drizzt Do'Urden"/>
         </MudItem>
-        <MudItem xs="12" Class="px-4">
+        <MudItem xs="12">
             <MudGrid Spacing="2">
                 @foreach (var proposedDate in _response.ProposedDates)
                 {
