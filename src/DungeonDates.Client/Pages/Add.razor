@@ -4,10 +4,20 @@
 
 <PageTitle>Propose Dates - Dungeon Dates</PageTitle>
 
+@{
+    // Heron.MudCalendar offers no other way to target the "today" date other than by the `identifier` attribute.
+    var identifierDate = DateTime.Today.ToString("M/d/yyyy"); // "05/13/2025"
+    var escapedDate = identifierDate.Replace("/", "\\/");       // "05\\/13\\/2025"
+}
+
 <style>
     .mud-cal-toolbar .mud-menu { display: none; }
     .mud-cal-month-link:hover { background-color: rgba(92, 68, 52, 0.1); }
+    .mud-cal-month-cell-header { font-size:  1.2rem; }
     .mud-calendar button { color: rgba(226, 212, 183, 1) }
+    div[identifier="@escapedDate"] {
+        background-color: rgba(59, 106, 157, 0.2) !important;
+    }
 </style>
 
 <MudGrid Spacing="2">
@@ -22,8 +32,9 @@
             Use the calendar below to select days. You can add or remove days simply by touching the day. Then click 'Save'.
         </MudAlert>
         <MudCalendar @ref=_scheduler Items="_calendarDates" CellClicked="OnCellClicked" ItemClicked="OnItemClicked"
-                     ShowDropdownViewSelector="true" ShowPrevNextButtons="true" ToolbarPadding="0" View="CalendarView.Month"
-                     ShowDay="false" ShowWeek="false" ShowMonth="true" ShowWorkWeek="false" Class="pt-2" Style="background-color: transparent; box-shadow: none;">
+                     ShowPrevNextButtons="true" ToolbarPadding="0" View="CalendarView.Month"
+                     ShowDay="false" ShowWeek="false" ShowMonth="true" ShowWorkWeek="false" Class="pt-2" Style="background-color: transparent; box-shadow: none;"
+                     HighlightToday="false">
             <MonthTemplate>
                 <div class="d-flex justify-center">
                     <MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" Style="width: 50px; height: 50px;"/>
