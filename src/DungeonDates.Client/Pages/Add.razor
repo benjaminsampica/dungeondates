@@ -10,15 +10,15 @@
     var escapedDate = identifierDate.Replace("/", "\\/");       // "05\\/13\\/2025"
 }
 
+
 <style>
     .mud-cal-toolbar .mud-menu { display: none; }
     .mud-cal-month-link:hover { background-color: rgba(92, 68, 52, 0.1); }
     .mud-cal-month-cell-header { font-size:  1.2rem; }
-    .mud-calendar button { color: rgba(226, 212, 183, 1) }
+    .mud-calendar button { color: rgba(226, 212, 183, 1) !important; }
     div[identifier="@escapedDate"] {
         background-color: rgba(59, 106, 157, 0.2) !important;
-    }
-</style>
+    }</style>
 
 <MudGrid Spacing="2">
     <MudItem xs="12">
