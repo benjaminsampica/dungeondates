@@ -19,17 +19,28 @@ else
         {
             <MudItem xs="12">
                 <MudAlert Severity="Severity.Error" ShowCloseIcon="false">
-                    Alas, the stars refuse to align - none of these dates please all the adventurers. <MudLink Href="/add" Color="Color.Error" Style="font-weight: bolder">Summon new dates?</MudLink>
+                    Alas, the stars refuse to align - none of these dates please all the adventurers. <MudLink Href="/add" Color="Color.Error" Style="font-weight: bolder;" Underline="Underline.Always">Summon new dates?</MudLink>
                 </MudAlert>
             </MudItem>
         }
-        <MudItem xs="12" Class="py-2">
-            <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
-                Enter your name and then answer whether you are available for each of the given date(s) below.
-            </MudAlert>
-        </MudItem>
+        @if (!_hasAlreadyResponded)
+        {
+            <MudItem xs="12" Class="py-2">
+                <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
+                    Enter your name and then answer whether you are available for each of the given date(s) below.
+                </MudAlert>
+            </MudItem>
+        }
+        else
+        {
+            <MudItem xs="12" Class="py-2">
+                <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
+                    You have already filled out this response. You can change your answers by changing a response on each date and clicking 'Save'.
+                </MudAlert>
+            </MudItem>
+        }
         <MudItem xs="12">
-            <MudTextField Label="Your Name" @bind-Value=@_name Variant="Variant.Outlined" Placeholder="Drizzt Do'Urden"/>
+            <MudTextField Label="Your Name" @bind-Value=@_name Variant="Variant.Outlined" Placeholder="Drizzt Do'Urden" Disabled="_hasAlreadyResponded"/>
         </MudItem>
         <MudItem xs="12">
             <MudGrid Spacing="2">
@@ -61,35 +72,36 @@ else
                                 }
                             </MudCardContent>
                             <MudCardActions>
-                                @if (!_formHasBeenSubmitted)
-                                {
-                                    <MudToggleIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Close" Variant="Variant.Filled"
-                                                         ToggledIcon="@Icons.Material.Filled.Check" ToggledColor="Color.Success" ToggledVariant="Variant.Filled"
-                                                         ToggledChanged="() => OnProposedDateClick(proposedDate)" Size="Size.Large" Style="width: 100%"/>
+                                @{
+                                    var proposedDateResponse = _request.ProposedDateResponses.First(pdr => pdr.ProposedDateId == proposedDate.Id);
                                 }
+                                <MudToggleGroup T="bool" SelectionMode="SelectionMode.SingleSelection"
+                                                Style="width: 100%;"
+                                                Size="Size.Large"
+                                                Value="proposedDateResponse.Accepted" ValueChanged="() => proposedDateResponse.Accepted = !proposedDateResponse.Accepted" CheckMark FixedContent>
+                                    <MudToggleItem Value="true" Text="Available" SelectedIcon="@Icons.Material.Filled.Check" />
+                                    <MudToggleItem Value="false" Text="Unavailable" SelectedIcon="@Icons.Material.Filled.Cancel" />
+                                </MudToggleGroup>
                             </MudCardActions>
                         </MudCard>
                     </MudItem>
                 }
             </MudGrid>
         </MudItem>
-        @if (!_formHasBeenSubmitted)
-        {
-            <MudItem xs="12">
-                <MudButton OnClick="OnSaveClickedAsync" Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large" FullWidth="true" Disabled="_isLoading">
-                    <MudText Typo="Typo.h4" GutterBottom="false" Color="Color.Secondary">
-                        @if (_isLoading)
-                        {
-                            <span>Saving...</span>
-                        }
-                        else
-                        {
-                            <span>Save</span>
-                        }
-                    </MudText>
-                </MudButton>
-            </MudItem>
-        }
+        <MudItem xs="12">
+            <MudButton OnClick="OnSaveClickedAsync" Color="Color.Primary" Variant="Variant.Filled" Size="Size.Large" FullWidth="true" Disabled="_isLoading">
+                <MudText Typo="Typo.h4" GutterBottom="false" Color="Color.Secondary">
+                    @if (_isLoading)
+                    {
+                        <span>Saving...</span>
+                    }
+                    else
+                    {
+                        <span>Save</span>
+                    }
+                </MudText>
+            </MudButton>
+        </MudItem>
     </MudGrid>
     <img src="/divider.png" alt="Fancy divider" class="fantasy-divider py-2" />
 }

@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using DungeonDates.Client;
@@ -8,6 +9,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddMudServices();
+builder.Services.AddBlazoredLocalStorage();
 
 var backendBaseAddress = builder.HostEnvironment.BaseAddress + "api/";
 if (builder.HostEnvironment.IsDevelopment())

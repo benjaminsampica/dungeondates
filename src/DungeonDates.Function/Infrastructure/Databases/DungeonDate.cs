@@ -19,7 +19,7 @@ public class ProposedDate
 public class ProposedDateResponse
 {
     public Guid Id { get; init; }
-    public required string Name { get; init; }
-    public required bool Accepted { get; init; }
+    public string Name { get; set; }
+    public bool Accepted { get; set; }
     public DateTimeOffset CreatedOn { get; init; } = DateTimeOffset.UtcNow;
 }

@@ -46,6 +46,13 @@ public partial class Add(HttpClient httpClient, ISnackbar snackbar, IDialogServi
             return;
         }
 
+        if (_calendarDates.Count > 30)
+        {
+            _isLoading = false;
+            snackbar.Add($"You cannot add more than 30 dates at a time. You have {_calendarDates.Count} dates selected. Please reduce it down to 30 or less.", Severity.Error);
+            return;
+        }
+
         try
         {
             var response = await httpClient.PostAsJsonAsync("add", _calendarDates.Select(cd => new AddCalendarDate { Start = cd.Start, End = cd.End!.Value }));

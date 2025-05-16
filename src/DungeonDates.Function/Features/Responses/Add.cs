@@ -26,13 +26,17 @@ public class Add(DungeonDatesDbContext dbContext)
 
         foreach (var proposedDate in request!.ProposedDateResponses)
         {
-            var proposedDateResponse = new ProposedDateResponse
-            {
-                Accepted = proposedDate.Accepted,
-                Name = request.Name
-            };
-            
             var existingProposedDate = dungeonDate.Dates.First(d => d.Id == proposedDate.ProposedDateId);
+
+            var proposedDateResponse = request.HasAlreadyResponded ? existingProposedDate.Responses.First(r => r.Name == request.Name) : new();
+            proposedDateResponse.Name = request.Name!;
+            proposedDateResponse.Accepted = proposedDate.Accepted;
+
+            if (request.HasAlreadyResponded)
+            {
+                existingProposedDate.Responses.Remove(proposedDateResponse);
+            }
+            
             existingProposedDate.Responses.Add(proposedDateResponse);
         }
         

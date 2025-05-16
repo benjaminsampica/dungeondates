@@ -1,25 +1,26 @@
+using Blazored.LocalStorage;
 using DungeonDates.Shared.Features.Responses;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
 namespace DungeonDates.Client.Pages;
 
-public partial class Respond(HttpClient httpClient, NavigationManager navigationManager, ISnackbar snackbar) : IDisposable
+public partial class Respond(HttpClient httpClient, NavigationManager navigationManager, ISnackbar snackbar, ILocalStorageService localStorageService) : IDisposable
 {
     [Parameter, EditorRequired] public Guid Id { get; set; }
     
     private GetDetailResponse? _response;
     private readonly PostDetailRequest _request = new();
     private readonly CancellationTokenSource _cts = new();
-
+    private RespondLocalStorageState? _localStorageState = new();
     private string? _name;
-
-    private bool _formHasBeenSubmitted;
-    private bool _isLoading;
     
-    protected override async Task OnInitializedAsync() => await LoadResponsesAsync();
+    private bool _isLoading;
+    private bool _hasAlreadyResponded;
+    
+    protected override async Task OnInitializedAsync() => await LoadPageStateAsync();
 
-    private async Task LoadResponsesAsync()
+    private async Task LoadPageStateAsync()
     {
         var response = await httpClient.GetAsync($"detail/{Id}");
 
@@ -28,22 +29,28 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
             navigationManager.NavigateTo("/StatusCode/404");
             return;
         }
-
-        _response = await response.Content.ReadFromJsonAsync<GetDetailResponse>();
-
-        foreach (var proposedDate in _response!.ProposedDates)
-        {
-            _request.ProposedDateResponses.Add(new() { Accepted = false, ProposedDateId = proposedDate.Id });
-        }
         
         _request.Id = Id;
-    }
+        _response = await response.Content.ReadFromJsonAsync<GetDetailResponse>();
+        _localStorageState = await localStorageService.GetItemAsync<RespondLocalStorageState>(Id.ToString(), _cts.Token);
 
-    private void OnProposedDateClick(GetDetailResponse.ProposedDate proposedDate)
-    {
-        var response = _request.ProposedDateResponses.First(pdr => pdr.ProposedDateId == proposedDate.Id);
-        
-        response.Accepted = !response.Accepted;
+        if (_localStorageState != null)
+        {
+            _name = _localStorageState.Name;
+            _hasAlreadyResponded = true;
+        }
+
+        _request.ProposedDateResponses.Clear();
+        foreach (var proposedDate in _response!.ProposedDates)
+        {
+            var proposedDateResponse = new PostDetailRequest.ProposedDate
+            {
+                ProposedDateId = proposedDate.Id, 
+                Accepted = _hasAlreadyResponded && (proposedDate.Responses.FirstOrDefault(r => r.Name == _name)?.Accepted ?? false)
+            };
+            
+            _request.ProposedDateResponses.Add(proposedDateResponse);
+        }
     }
 
     private async Task OnSaveClickedAsync()
@@ -60,12 +67,14 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
         try
         {
             _request.Name = _name;   
+            _request.HasAlreadyResponded = _hasAlreadyResponded;
             var response = await httpClient.PostAsJsonAsync($"detail/{Id}", _request, _cts.Token);
 
             response.EnsureSuccessStatusCode();
             
+            await localStorageService.SetItemAsync(_request.Id.ToString(), new { Name = _name }, CancellationToken.None);
+            
             snackbar.Add("Successfully saved your response.", Severity.Success);
-            _formHasBeenSubmitted = true;
         }
         catch
         {
@@ -74,7 +83,7 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
         finally
         {
             _isLoading = false;
-            await LoadResponsesAsync();
+            await LoadPageStateAsync();
         }
     }
     
@@ -82,5 +91,10 @@ public partial class Respond(HttpClient httpClient, NavigationManager navigation
     {
         _cts.Cancel();
         _cts.Dispose();
+    }
+
+    private class RespondLocalStorageState
+    {
+        public string? Name { get; set; } = string.Empty;
     }
 }

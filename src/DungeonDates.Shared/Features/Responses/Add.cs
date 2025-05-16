@@ -5,6 +5,7 @@ public class PostDetailRequest
     public Guid Id { get; set; }
     
     public string? Name { get; set; }
+    public bool HasAlreadyResponded { get; set; }
     public List<ProposedDate> ProposedDateResponses { get; set; } = [];
 
     public class ProposedDate
