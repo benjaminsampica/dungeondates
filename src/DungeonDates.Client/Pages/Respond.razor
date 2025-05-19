@@ -63,11 +63,11 @@ else
                                 {
                                     @if (response.Accepted)
                                     {
-                                        <MudChip T="string" Icon="@Icons.Material.Filled.Check" Color="Color.Success" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
+                                        <MudChip T="string" Icon="@Icons.Material.Filled.Check" Color="Color.Success" Size="Size.Large" Variant="Variant.Outlined" Style="font-weight: bolder;">@response.Name</MudChip>
                                     }
                                     else
                                     {
-                                        <MudChip T="string" Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Large" Variant="Variant.Outlined">@response.Name</MudChip>
+                                        <MudChip T="string" Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Large" Variant="Variant.Outlined" Style="font-weight: bolder;">@response.Name</MudChip>
                                     }
                                 }
                             </MudCardContent>
@@ -79,8 +79,8 @@ else
                                                 Style="width: 100%;"
                                                 Size="Size.Large"
                                                 Value="proposedDateResponse.Accepted" ValueChanged="() => proposedDateResponse.Accepted = !proposedDateResponse.Accepted" CheckMark FixedContent>
-                                    <MudToggleItem Value="true" Text="Available" SelectedIcon="@Icons.Material.Filled.Check" />
-                                    <MudToggleItem Value="false" Text="Unavailable" SelectedIcon="@Icons.Material.Filled.Cancel" />
+                                    <MudToggleItem Value="true" Text="Available" SelectedIcon="@Icons.Material.Filled.Check"  Style="font-weight: bolder;"/>
+                                    <MudToggleItem Value="false" Text="Unavailable" SelectedIcon="@Icons.Material.Filled.Cancel"  Style="font-weight: bolder;"/>
                                 </MudToggleGroup>
                             </MudCardActions>
                         </MudCard>
