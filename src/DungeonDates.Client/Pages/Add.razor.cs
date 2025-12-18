@@ -7,7 +7,7 @@ namespace DungeonDates.Client.Pages;
 public partial class Add(HttpClient httpClient, ISnackbar snackbar, IDialogService dialogService) : IDisposable
 {
     private readonly IList<CalendarItem> _calendarDates = [];
-    private MudCalendar _scheduler = null!;
+    private MudCalendar<CalendarItem> _scheduler = null!;
     private readonly CancellationTokenSource _cts = new();
     private bool _isLoading;
     

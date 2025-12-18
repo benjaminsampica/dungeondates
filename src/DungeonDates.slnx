@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DungeonDates.Client/DungeonDates.Client.csproj" />
+  <Project Path="DungeonDates.Function/DungeonDates.Function.csproj" />
+  <Project Path="DungeonDates.Shared/DungeonDates.Shared.csproj" />
+</Solution>
