@@ -31,7 +31,7 @@
         <MudAlert Severity="Severity.Info" ShowCloseIcon="false">
             Use the calendar below to select days. You can add or remove days simply by touching the day. Then click 'Save'.
         </MudAlert>
-        <MudCalendar @ref=_scheduler Items="_calendarDates" CellClicked="OnCellClicked" ItemClicked="OnItemClicked"
+        <MudCalendar @ref=_scheduler T="CalendarItem" Items="_calendarDates" CellClicked="OnCellClicked" ItemClicked="OnItemClicked"
                      ShowPrevNextButtons="true" ToolbarPadding="0" View="CalendarView.Month"
                      ShowDay="false" ShowWeek="false" ShowMonth="true" ShowWorkWeek="false" Class="pt-2" Style="background-color: transparent; box-shadow: none;"
                      HighlightToday="false">
